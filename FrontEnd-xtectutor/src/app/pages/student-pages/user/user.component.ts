@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
+import { StudentEntriesComponent } from './../../../data-tables/student-entries/student-entries.component';
+
 @Component({
     selector: 'user-cmp',
     moduleId: module.id,
