@@ -3,12 +3,12 @@ import Chart from 'chart.js';
 
 
 @Component({
-    selector: 'dashboard-cmp',
+    selector: 'home-cmp',
     moduleId: module.id,
-    templateUrl: 'dashboard.component.html'
+    templateUrl: 'home.component.html'
 })
 
-export class DashboardComponent implements OnInit{
+export class HomeComponent implements OnInit{
 
   public canvas : any;
   public ctx;

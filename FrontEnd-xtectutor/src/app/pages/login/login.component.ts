@@ -20,10 +20,23 @@ export class LoginComponent{
   //POSTERIORMENTE SE ENVÍA AL COMPONENTE RESPECTIVO
   //RECIBE: NOMBRE DE USUARIO Y CONTRASEÑA, RESPECTIVAMENTE
   verifyLogin(username, password, type){
-    localStorage.setItem('current_username', username);
-    localStorage.setItem("current_password", password);
+    localStorage.setItem("currentUsername", username);
+    localStorage.setItem("currentPassword", password);
+    localStorage.setItem("userType", type);
+
+    if(type == "student"){
+        this.CS.studentLogIn(username, password);
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['dashboard']));
+    }
+    else if(type == "professor"){
+        alert("Profesor")
+    }
+    else if(type == "admin"){
+        alert("Administrador")
+    }
+
 
   }
-
 
 }

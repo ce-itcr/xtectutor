@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 
 import { StudentLayoutRoutes } from './student-layout.routing';
 
-import { DashboardComponent }       from '../../pages/dashboard/dashboard.component';
-import { UserComponent }            from '../../pages/user/user.component';
+import { HomeComponent }       from '../../pages/student-pages/home/home.component';
+import { UserComponent }            from '../../pages/student-pages/user/user.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -18,7 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   declarations: [
-    DashboardComponent,
+    HomeComponent,
     UserComponent,
   ]
 })

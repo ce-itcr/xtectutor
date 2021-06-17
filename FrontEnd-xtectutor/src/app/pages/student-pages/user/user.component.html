@@ -1,3 +1,5 @@
+<section *ngIf="userData">
+
 <div class="row">
   <div class="col-md-4">
     <div class="card card-user">
@@ -5,15 +7,17 @@
         <img src="assets/img/damir-bosnjak.jpg" alt="...">
       </div>
       <div class="card-body">
+        <div *ngFor="let item of userData">
         <div class="author">
           <a href="#">
-            <img class="avatar border-gray" src="assets/img/mike.jpg" alt="...">
-            <h5 class="title">Chet Faker</h5>
+            <img class="avatar border-gray" src="assets/img/default-avatar.png" alt="...">
+            <h5 class="title">{{ item.fullName }}</h5>
           </a>
           <p class="description">
-            @chetfaker
+            
           </p>
         </div>
+      </div>
         <p class="description text-center">
           "I like the way you work it
           <br> No diggity
@@ -200,3 +204,5 @@
     </div>
   </div>
 </div>
+
+</section>

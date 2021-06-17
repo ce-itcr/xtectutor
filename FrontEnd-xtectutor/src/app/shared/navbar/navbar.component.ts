@@ -31,6 +31,23 @@ export class NavbarComponent implements OnInit{
           this.sidebarClose();
        });
     }
+
+    toUserProfile(){
+      if(localStorage.getItem("userType") == "student"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['user']));
+      }
+    }
+
+    toHome(){
+      if(localStorage.getItem("userType") == "student"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['dashboard']));
+      }
+    }
+
+
+
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
       if(titlee.charAt(0) === '#'){
@@ -89,5 +106,7 @@ export class NavbarComponent implements OnInit{
         }
 
       }
+
+    
 
 }
