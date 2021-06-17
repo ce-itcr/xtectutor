@@ -25,4 +25,8 @@ export class UserComponent implements OnInit{
           console.log(this.userData);
         });
       }
+    
+    modifyPassword(){
+      alert("asdasd");
+    }
 }
