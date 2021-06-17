@@ -1,23 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-import { StudentEntriesComponent } from './../../../data-tables/student-entries/student-entries.component';
-
 @Component({
     selector: 'user-cmp',
-    moduleId: module.id,
-    templateUrl: 'user.component.html'
+    templateUrl: 'user.component.html',
+    styleUrls: ['./user.component.scss']
 })
 
 export class UserComponent implements OnInit{
 
     userData: any;
+    userEntries: any;
     currentUsername = localStorage.getItem("currentUsername");
 
     constructor(private http:HttpClient){}
 
     ngOnInit(){
         this.getStudentsData();
+        this.getStudentEntries();
     }
 
     getStudentsData(){
@@ -27,6 +27,13 @@ export class UserComponent implements OnInit{
           console.log(this.userData);
         });
       }
+    getStudentEntries(){
+      let url = "https://sheet.best/api/sheets/d48efa8c-42d4-4d4e-b2d8-a319c7dd5c2f/tabs/inputsdb";
+      return this.http.get(url).subscribe(res => {
+        this.userEntries = res;
+        console.log(this.userEntries);
+      });   
+    }
     
     modifyPassword(){
       alert("asdasd");

@@ -75,13 +75,42 @@
     </div>
   </div>
 
+  
+
   <div class="col-md-12">
     <div class="card ">
       <div class="card-header ">
         <h5 class="card-title">Mis entradas de conocimiento</h5>
       </div>
       <div class="card-body ">
-        <app-student-entries></app-student-entries>
+              <table class="striped highlight responsive-table">
+                  <thead class="thead-light">
+                      <tr>
+                          <th>Categoría</th>
+                          <th>Título</th>
+                          <th>Visibilidad</th>
+                          <th>Fecha de Creación</th>
+                          <th>Fecha de Creación</th>
+                          <th>Vistas</th>    
+                          <th>Valor</th>
+                          <th>Comentarios</th>
+                          <th>Edición</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of userEntries" >
+                          <td> <b>Tema: </b>{{ item.theme}} <br> <b>Curso: </b>{{ item.course }} <br> <b>Carrera: </b>{{ item.career }}</td>
+                          <td>{{ item.title }} </td>
+                          <th><i class="nc-icon nc-glasses-2"></i>{{ item.visibility }} </th>
+                          <th>{{ item.creationDate }}</th>
+                          <th>{{ item.updateDate}}</th>
+                          <td>{{ item.views }}</td>
+                          <td>{{ item.rating }}</td>
+                          <td>{{ item.comments }}</td>
+                          <td><i  class="nc-icon nc-glasses-2 left"></i></td>
+                      </tr>
+                  </tbody>
+              </table>
       </div>
       <div class="card-footer ">
         <hr>
@@ -94,5 +123,4 @@
 
 
 </div>
-
 </section>

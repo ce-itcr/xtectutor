@@ -15,20 +15,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
-import { MyInputsComponent } from './data-tables/my-inputs/my-inputs.component';
-import { StudentEntriesComponent } from './data-tables/student-entries/student-entries.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentLayoutComponent,
-    MyInputsComponent,
-    StudentEntriesComponent
-  ],
-  exports: [
-    MyInputsComponent,
-    StudentEntriesComponent
   ],
   imports: [
     BrowserAnimationsModule,
