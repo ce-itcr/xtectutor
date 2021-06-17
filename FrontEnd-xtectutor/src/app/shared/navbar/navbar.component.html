@@ -45,7 +45,107 @@
     </div>
 
     <div class=" justify-content-end">
-      <button type="submit" class="btn btn-primary" style="width: 145px;">Crear</button>
+      <button type="submit" class="btn btn-primary" style="width: 145px;" (click)="openModal(create_entry)">Crear</button>
     </div>
   </div>
 </nav>
+
+<ng-template #create_entry let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Crear Entrada de Conocimiento</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label>Título (*)</label>
+            <input #title type="text" class="form-control" >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 pr-1">
+          <div class="form-group">
+            <label>Descipción (*)</label>
+            <input #description type="text" class="form-control" >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 pr-1">
+          <div class="form-group">
+            <label>Entrada de Conocimiento (*)</label>
+            <input #input type="text" class="form-control" >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label>Añadir coautores </label>
+            <input #coauthors type="text" class="form-control" >
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label>Categoría (*)</label>
+
+              <br>
+              
+              <label for="career" style="margin-right: 20px;">Carrera: </label>
+              <select #career name="career" id="career" class="form-control rounded-pill border-0 shadow-sm px-4">
+                <option *ngFor="let item of careers" [value]="item.name" (click)="getCoursesData(item.name)">
+                  {{item.name}}
+                </option>
+              </select>
+              
+              <label for="course" style="margin-right: 20px;">Curso: </label>
+              <select #course name="course" id="course" class="form-control rounded-pill border-0 shadow-sm px-4">
+                <option *ngFor="let item of courses" [value]="item.name">
+                  {{item.name}}
+                </option>
+              </select>
+
+              <label for="theme" style="margin-right: 20px;">Tema: </label>
+              <select #theme name="theme" id="theme" class="form-control rounded-pill border-0 shadow-sm px-4">
+                <option *ngFor="let item of themes" [value]="item.name">
+                  {{item.name}}
+                </option>
+              </select>
+
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label>Añadir imágenes </label>
+            <button type="submit" class="btn btn-primary"  >Subir archivo</button>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label style="color: slategrey;"><b>Identificador de usuario: </b> {{ currentUsername }}</label>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="createCourse(course_id.value, course_name.value, course_credits.value, course_career.value)" (click)="modal.close()">Crear</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>

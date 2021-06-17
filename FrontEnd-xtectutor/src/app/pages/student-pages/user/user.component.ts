@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'user-cmp',
@@ -13,22 +14,24 @@ export class UserComponent implements OnInit{
     userEntries: any;
     currentUsername = localStorage.getItem("currentUsername");
 
-    constructor(private http:HttpClient){}
+    constructor(private http:HttpClient, private modal:NgbModal){}
 
     ngOnInit(){
         this.getStudentsData();
         this.getStudentEntries();
     }
 
+    openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
+
     getStudentsData(){
-        let url = "https://sheet.best/api/sheets/d48efa8c-42d4-4d4e-b2d8-a319c7dd5c2f/username/"+this.currentUsername;
+        let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/username/"+this.currentUsername;
         return this.http.get(url).subscribe(res => {
           this.userData = res;
           console.log(this.userData);
         });
       }
     getStudentEntries(){
-      let url = "https://sheet.best/api/sheets/d48efa8c-42d4-4d4e-b2d8-a319c7dd5c2f/tabs/inputsdb";
+      let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/tabs/inputsdb";
       return this.http.get(url).subscribe(res => {
         this.userEntries = res;
         console.log(this.userEntries);

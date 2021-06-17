@@ -1,6 +1,8 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location} from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     moduleId: module.id,
@@ -15,22 +17,33 @@ export class NavbarComponent implements OnInit{
     private toggleButton;
     private sidebarVisible: boolean;
 
+    careers: any;
+    courses: any;
+    themes: any;
+
+    currentUsername = localStorage.getItem("currentUsername");
+
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;
 
-    constructor(location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router) {
+    constructor(private http:HttpClient, private modal:NgbModal, location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
 
     ngOnInit(){
+        this.getCareersData();
+        this.getCoursesData();
+        this.getThemesData();
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.router.events.subscribe((event) => {
           this.sidebarClose();
        });
     }
+
+    openModal(content){ this.modal.open(content,{size:'xl', centered:true});}
 
     toUserProfile(){
       if(localStorage.getItem("userType") == "student"){
@@ -46,6 +59,29 @@ export class NavbarComponent implements OnInit{
       }
     }
 
+    getCareersData(){
+      let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/tabs/careersdb";
+      return this.http.get(url).subscribe(res => {
+        this.careers = res;
+        console.log(this.careers);
+      });
+    }
+
+    getCoursesData(){
+      let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/tabs/coursesdb";
+      return this.http.get(url).subscribe(res => {
+        this.courses = res;
+        console.log(this.courses);
+      });
+    }
+    
+    getThemesData(){
+      let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/tabs/themesdb";
+      return this.http.get(url).subscribe(res => {
+        this.themes = res;
+        console.log(this.themes);
+      });
+    }
 
 
     getTitle(){
