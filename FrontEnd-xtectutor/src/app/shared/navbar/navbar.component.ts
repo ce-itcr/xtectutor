@@ -33,9 +33,6 @@ export class NavbarComponent implements OnInit{
     }
 
     ngOnInit(){
-        this.getCareersData();
-        this.getCoursesData();
-        this.getThemesData();
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.router.events.subscribe((event) => {
@@ -58,31 +55,6 @@ export class NavbarComponent implements OnInit{
         this.router.navigate(['dashboard']));
       }
     }
-
-    getCareersData(){
-      let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/tabs/careersdb";
-      return this.http.get(url).subscribe(res => {
-        this.careers = res;
-        console.log(this.careers);
-      });
-    }
-
-    getCoursesData(){
-      let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/tabs/coursesdb";
-      return this.http.get(url).subscribe(res => {
-        this.courses = res;
-        console.log(this.courses);
-      });
-    }
-    
-    getThemesData(){
-      let url = "https://sheet.best/api/sheets/7e73eed3-41f5-4fce-8cc3-338fa4281d84/tabs/themesdb";
-      return this.http.get(url).subscribe(res => {
-        this.themes = res;
-        console.log(this.themes);
-      });
-    }
-
 
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
