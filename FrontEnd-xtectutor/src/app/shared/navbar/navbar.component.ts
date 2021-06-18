@@ -33,11 +33,21 @@ export class NavbarComponent implements OnInit{
     }
 
     ngOnInit(){
+        this.setCreateButtonStatus();
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.router.events.subscribe((event) => {
           this.sidebarClose();
        });
+
+    }
+
+    setCreateButtonStatus(){
+      if(localStorage.getItem("userType") == "student"){
+        (document.getElementById('createButton') as HTMLInputElement).disabled = false;
+      } else{
+        (document.getElementById('createButton') as HTMLInputElement).disabled = true;
+      }
     }
 
     openModal(content){ this.modal.open(content,{size:'xl', centered:true});}
