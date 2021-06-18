@@ -5,13 +5,13 @@ import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
-export interface EntriesTableItem {
+export interface MyEntriesTableItem {
   subject: string;
   course: string;
   career: string;
   title: string;
   description: string;
-  author: string;
+  visibility: string;
   creationDate: string;
   creationHour: string;
   lastUpdate: string;
@@ -22,20 +22,20 @@ export interface EntriesTableItem {
 }
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: EntriesTableItem[] = [
+const EXAMPLE_DATA: MyEntriesTableItem[] = [
   {subject: 'Ley de Tensiones de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Tensiones de Kirchhoff', description: 'Breve introducción a la Ley de Tensiones de Kirchhoff',
-  author: 'Agustin Venegas', creationDate: '10/06/2021', creationHour: '12:00:00', lastUpdate: '17/06/2021', updateHour: '13:00:00', views: 13, value: 4.5, comments: 3},
+  visibility: 'Público', creationDate: '10/06/2021', creationHour: '12:00:00', lastUpdate: '17/06/2021', updateHour: '13:00:00', views: 13, value: 4.5, comments: 3},
   {subject: 'Ley de Corrientes de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Corrientes de Kirchhoff', description: 'Breve introducción a la Ley de Corrientes de Kirchhoff',
-  author: 'Ivan Solis', creationDate: '6/06/2021', creationHour: '14:00:00', lastUpdate: '15/06/2021', updateHour: '8:00:00', views: 20, value: 4, comments: 7},
+  visibility: 'Público', creationDate: '6/06/2021', creationHour: '14:00:00', lastUpdate: '15/06/2021', updateHour: '8:00:00', views: 20, value: 4, comments: 7},
 ];
 
 /**
- * Data source for the EntriesTable view. This class should
+ * Data source for the MyEntriesTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class EntriesTableDataSource extends DataSource<EntriesTableItem> {
-  data: EntriesTableItem[] = EXAMPLE_DATA;
+export class MyEntriesTableDataSource extends DataSource<MyEntriesTableItem> {
+  data: MyEntriesTableItem[] = EXAMPLE_DATA;
   paginator: MatPaginator;
   sort: MatSort;
 
@@ -48,7 +48,7 @@ export class EntriesTableDataSource extends DataSource<EntriesTableItem> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<EntriesTableItem[]> {
+  connect(): Observable<MyEntriesTableItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -72,7 +72,7 @@ export class EntriesTableDataSource extends DataSource<EntriesTableItem> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: EntriesTableItem[]) {
+  private getPagedData(data: MyEntriesTableItem[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -81,7 +81,7 @@ export class EntriesTableDataSource extends DataSource<EntriesTableItem> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: EntriesTableItem[]) {
+  private getSortedData(data: MyEntriesTableItem[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }

@@ -76,43 +76,7 @@
   </div>
 
   <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Mis entradas de conocimiento</h4>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead class="text-primary">
-                <tr>
-                    <th>Categoría</th>
-                    <th>Título</th>
-                    <th>Visibilidad</th>
-                    <th>Fecha de Creación</th>
-                    <th>Fecha de Creación</th>
-                    <th>Vistas</th>    
-                    <th>Valor</th>
-                    <th>Comentarios</th>
-                    <th class="text-right">Edición</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of userEntries" >
-                    <td> <b>Tema: </b>{{ item.theme}} <br> <b>Curso: </b>{{ item.course }} <br> <b>Carrera: </b>{{ item.career }}</td>
-                    <td>{{ item.title }} </td>
-                    <th><i class="nc-icon nc-key-25"></i>   {{ item.visibility }} </th>
-                    <th>{{ item.creationDate }} <br> {{ item.creationDateHour }}</th>
-                    <th>{{ item.updateDate}} <br> {{ item.updateDateHour }}</th>
-                    <td>{{ item.views }}</td>
-                    <td>{{ item.rating }}</td>
-                    <td>{{ item.comments }}</td>
-                    <td class="text-right"><i  class="nc-icon nc-settings"></i></td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
-      </div>
-    </div>
+    <my-entries-table></my-entries-table>
   </div>
 
 </div>

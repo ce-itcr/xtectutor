@@ -11,6 +11,7 @@ import { UserComponent }            from '../../pages/student-pages/user/user.co
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { EntriesTableComponent } from 'app/data-tables/entries-table/entries-table.component';
+import { MyEntriesTableComponent } from 'app/data-tables/my-entries-table/my-entries-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -29,7 +30,8 @@ import { MatSortModule } from '@angular/material/sort';
   declarations: [
     HomeComponent,
     UserComponent,
-    EntriesTableComponent
+    EntriesTableComponent,
+    MyEntriesTableComponent
   ]
 })
 

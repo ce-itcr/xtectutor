@@ -2,24 +2,24 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { EntriesTableDataSource, EntriesTableItem } from './entries-table-datasource';
+import { MyEntriesTableDataSource, MyEntriesTableItem } from './my-entries-table-datasource';
 
 @Component({
-  selector: 'entries-table',
-  templateUrl: './entries-table.component.html',
-  styleUrls: ['./entries-table.component.css']
+  selector: 'my-entries-table',
+  templateUrl: './my-entries-table.component.html',
+  styleUrls: ['./my-entries-table.component.css']
 })
-export class EntriesTableComponent implements AfterViewInit, OnInit {
+export class MyEntriesTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<EntriesTableItem>;
-  dataSource: EntriesTableDataSource;
+  @ViewChild(MatTable) table: MatTable<MyEntriesTableItem>;
+  dataSource: MyEntriesTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['category', 'title', 'author', 'creationDate', 'lastUpdate', 'stats', 'read'];
+  displayedColumns = ['category', 'title', 'visibility', 'creationDate', 'lastUpdate', 'stats', 'edit'];
 
   ngOnInit() {
-    this.dataSource = new EntriesTableDataSource();
+    this.dataSource = new MyEntriesTableDataSource();
   }
 
   ngAfterViewInit() {
