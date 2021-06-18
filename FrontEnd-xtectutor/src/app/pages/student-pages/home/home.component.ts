@@ -36,9 +36,7 @@ export class HomeComponent implements OnInit{
         this.currentSubject = '';
         //COMUNICACION
         this.courses = ['UH', 'CC', 'FD', 'Jonito mi vida'];
-
-        var x = document.getElementById("course");
-        x.textContent = "Seleccionar";
+        this.subjects = [];
       }else{
         this.currentCareer = career;
         this.courses =  ['CA', 'CC', 'Progrita', 'Cogida'];

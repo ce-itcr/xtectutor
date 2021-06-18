@@ -16,10 +16,13 @@ export class NavbarComponent implements OnInit{
     private nativeElement: Node;
     private toggleButton;
     private sidebarVisible: boolean;
-
-    careers: any;
-    courses: any;
-    themes: any;
+  
+    careers = ['Hola hola', 'Bye bye'];
+    courses = [];
+    subjects = [];
+    currentCareer = '';
+    currentCourse = '';
+    currentSubject = '';
 
     currentUsername = localStorage.getItem("currentUsername");
 
@@ -131,6 +134,55 @@ export class NavbarComponent implements OnInit{
 
       }
 
-    
+
+
+
+
+
+
+      public setCourses(career, course){
+        if(career == 'Seleccionar'){
+          this.currentCareer = '';
+          this.currentCourse = '';
+          this.currentSubject = '';
+          this.courses = [];
+          this.subjects = [];
+        }else if(career != this.currentCareer && this.currentCareer != ''){
+          this.currentCareer = career;
+          this.currentCourse = '';
+          this.currentSubject = '';
+          //COMUNICACION
+          this.courses = ['UH', 'CC', 'FD', 'Jonito mi vida'];
+          this.subjects = [];
+        }else{
+          this.currentCareer = career;
+          this.courses =  ['CA', 'CC', 'Progrita', 'Cogida'];
+          this.subjects = [];
+        }
+      }
+  
+      public setSubjects(item){
+        if(item == 'Seleccionar'){
+          this.currentCourse = '';
+          this.currentSubject = '';
+          this.subjects = [];
+        }else if(item != this.currentCourse && this.currentCourse != ''){
+          this.currentCourse = item;
+          this.currentSubject = '';
+          //COMUNICACION
+          this.subjects = ['uy', 'yu', 'hg', 'cvbs'];
+        }else{
+          this.currentCourse = item;
+          this.subjects =  ['Respuesta en frecuencia', 'Python', 'Java', 'Angelo mi amor'];
+        }
+      }
+  
+      public setCategory(item){
+        if(item == 'Seleccionar'){
+          this.currentSubject = '';
+        }else{
+          this.currentSubject = item;
+        }
+      }
 
 }

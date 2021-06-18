@@ -55,7 +55,7 @@
       <div class="row">
         <div class="col-md-5 pr-1">
           <div class="form-group">
-            <label>Título (*)</label>
+            <label><b>Título (*)</b></label>
             <input #title required type="text" class="form-control" >
           </div>
         </div>
@@ -63,7 +63,7 @@
       <div class="row">
         <div class="col-md-12 pr-1">
           <div class="form-group">
-            <label>Descipción (*)</label>
+            <label><b>Descipción (*)</b></label>
             <textarea #description required type="text" class="form-control" style="height: 200px;" maxlength="200"></textarea>
           </div>
         </div>
@@ -71,7 +71,7 @@
       <div class="row">
         <div class="col-md-12 pr-1">
           <div class="form-group">
-            <label>Entrada de Conocimiento (*)</label>
+            <label><b>Entrada de Conocimiento (*)</b></label>
             <textarea #input type="text" required class="form-control custom-input" style="height:500px" maxlength="500"></textarea>
           </div>
         </div>
@@ -79,7 +79,7 @@
       <div class="row">
         <div class="col-md-5 pr-1">
           <div class="form-group">
-            <label>Añadir coautores </label>
+            <label><b>Añadir coautores</b></label>
             <input #coauthors type="text" class="form-control" >
           </div>
         </div>
@@ -88,48 +88,47 @@
       <div class="row">
         <div class="col-md-5 pr-1">
           <div class="form-group">
-            <label>Categoría (*)</label>
-
-            <div class="row">
-              <div class="col-lg-6 col-md-12 col-sm-12">
-                <label for="course" style="margin-right: 20px;">Carrera: </label>
-                <select #career name="career" (change)="setCourses(career.value, course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
-                  <option selected>Seleccionar</option>
-                  <option *ngFor="let item of careers" [value]="item">
-                    {{item}}
-                  </option>
-                </select>
-              </div>
-              <div class="col-lg-6 col-md-12 col-sm-12">
-                <label for="course" style="margin-right: 20px;">Curso: </label>
-                <select #course name="course" (change)="setSubjects(course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
-                  <option selected>Seleccionar</option>
-                  <option *ngFor="let item of courses" [value]="item">
-                    {{item}}
-                  </option>
-                </select>
-              </div>
-              <div class="col-lg-6 col-md-12 col-sm-12">
-                <label for="course" style="margin-right: 20px;">Tema: </label>
-                <select #theme name="theme" id="theme" class="form-control rounded-pill border-0 shadow-sm px-4">
-                  <option selected>Seleccionar</option>
-                  <option *ngFor="let item of subjects" [value]="item">
-                    {{item}}
-                  </option>
-                </select>
-              </div>
-            </div>
-
+            <label><b>Categoría (*)</b></label>
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <label for="course" style="margin-right: 20px;">Carrera: </label>
+          <select #career name="career" (change)="setCourses(career.value, course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option selected>Seleccionar</option>
+            <option *ngFor="let item of careers" [value]="item">
+              {{item}}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <label for="course" style="margin-right: 20px;">Curso: </label>
+          <select #course name="course" (change)="setSubjects(course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option selected>Seleccionar</option>
+            <option *ngFor="let item of courses" [value]="item">
+              {{item}}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <label for="course" style="margin-right: 20px;">Tema: </label>
+          <select #theme name="theme" id="theme" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option selected>Seleccionar</option>
+            <option *ngFor="let item of subjects" [value]="item">
+              {{item}}
+            </option>
+          </select>
+        </div>
+      </div>
+          
 
       <hr>
 
       <div class="row">
         <div class="col-md-5 pr-1">
           <div class="form-group">
-            <label>Añadir imágenes </label>
+            <label>Añadir imágenes:  </label>
             <button type="submit" class="btn btn-primary"  >Subir archivo</button>
           </div>
         </div>
