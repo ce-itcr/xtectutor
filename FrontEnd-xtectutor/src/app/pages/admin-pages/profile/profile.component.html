@@ -1,0 +1,205 @@
+<section *ngIf="userData">
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-user">
+          <div class="image">
+            <img src="assets/img/damir-bosnjak.jpg" alt="...">
+          </div>
+          <div *ngFor="let item of userData">
+    
+          <div class="card-body">
+            <div class="author">
+              <a href="#">
+                <img class="avatar border-gray" src="assets/img/default-avatar.png" alt="...">
+                <h5 class="title">{{ item.fullName }}</h5>
+              </a>
+              <p class="description">
+                
+              </p>
+            </div>
+            <p class="description text-center">
+              {{ item.username }}
+            </p>
+          
+          <div class="card-footer">
+            <div>
+              <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm"  (click)="openModal(close_this)">Cerrar Sesión</button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="col-md-8">
+        <div class="card card-user">
+          <div class="card-header">
+            <h5 class="card-title">Información de Usuario</h5>
+          </div>
+          <div *ngFor="let item of userData">
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-5 pr-1">
+                  <div class="form-group">
+                    <label>Correo Institucional</label>
+                    <input type="text" class="form-control" disabled="" placeholder="email" value="{{ item.mail }}">
+                  </div>
+                </div>
+                <div class="col-md-5 pr-1">
+                  <div class="form-group">
+                    <label>Indentificador de Usuario</label>
+                    <input type="text" class="form-control" disabled="" placeholder="email" value="{{ item.username }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5 pr-1">
+                  <div class="form-group">
+                    <label>Sede</label>
+                    <input type="text" class="form-control" disabled="" placeholder="campus" value="{{ item.campus }}">
+                  </div>
+                </div>
+              </div>
+             
+            </form>
+    
+            <div class="row">
+              <div class="col-md-5 pr-1" style="margin-top: 50px; margin-bottom: 43px;">
+                <a (click)="openModal(update_password)" class="form-group">Modificar contraseña</a>  
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-4">
+        <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm"  (click)="openModal(create_admin)">Crear Nuevo Administrador</button>
+      </div>
+      <div class="col-md-8">
+        <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm"  (click)="openModal(upload_data)">Cargar datos de usuario</button>
+      </div>
+    
+      <div class="col-md-12" style="margin-top: 43px;">
+        <div class="card">
+            <div class="modal-header">
+                <h3 class="card-title text-primary">Lista de administradores</h3>
+            </div>
+            <div class="card-body">
+                <admins-table></admins-table>
+            </div>
+            <div class="modal-footer">
+                <p class="text-primary" style="padding-left: 0;">Última actualización: 00:00:00</p>
+            </div>
+        </div>
+        
+      </div>
+
+    </div>
+</section>
+    
+    
+<ng-template #close_this let-modal>
+    <div class="modal-header">
+        <img src="../../../../assets/img/xtectutor.png" class="display-4" style="margin-left: auto;margin-right: auto; display: block; width: 60%;">
+    </div>
+    <div class="modal-body">
+       <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>¿Seguro que desea salir?</b></h4>
+        xtectutor - Sistema de la Universidad XTEC que permite a los estudiantes compartir conocimiento de una manera eficiente.
+    </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close()">No</button>
+      </div>
+</ng-template>
+
+<ng-template #update_password let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Modificar contraseña</b></h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Digite su contraseña actual (*)</label>
+                    <input #currentPassword required type="text" class="form-control" >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Digite nueva contraseña (*)</label>
+                    <input #newPassword required type="text" class="form-control" >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Vuelva a digitar nueva contraseña (*)</label>
+                    <input #confirmationPassword required type="text" class="form-control" >
+                  </div>
+                </div>
+              </div>
+           </form>
+    </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Actualizar</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      </div>
+</ng-template>
+
+<ng-template #create_admin let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Crear Nuevo Administrador</b></h4>
+    </div>
+    <div class="modal-body">
+       <form>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Digite nombre y apellidos del admin (*)</label>
+                <input #name required type="text" class="form-control" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Digite correo institucional del admin (*)</label>
+                <input #mail required type="text" class="form-control" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Digite identificador del admin (*)</label>
+                <input #username required type="text" class="form-control" >
+              </div>
+            </div>
+          </div>
+       </form>
+    </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Aceptar</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      </div>
+</ng-template>
+
+<ng-template #upload_data let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Cargar datos de usuario</b></h4>
+    </div>
+    <div class="modal-body">
+
+    </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Aceptar</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      </div>
+</ng-template>

@@ -25,15 +25,15 @@ export class LoginComponent{
     localStorage.setItem("userType", type);
 
     if(type == "student"){
-        this.CS.studentLogIn(username, password);
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-        this.router.navigate(['dashboard']));
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate(['home']));
     }
     else if(type == "professor"){
         alert("Profesor")
     }
     else if(type == "admin"){
-        alert("Administrador")
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate(['categories']));
     }
 
 

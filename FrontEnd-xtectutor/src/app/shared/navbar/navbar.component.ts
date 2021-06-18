@@ -46,13 +46,19 @@ export class NavbarComponent implements OnInit{
       if(localStorage.getItem("userType") == "student"){
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
         this.router.navigate(['user']));
+      } else if(localStorage.getItem("userType") == "admin"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['profile']));
       }
     }
 
     toHome(){
       if(localStorage.getItem("userType") == "student"){
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-        this.router.navigate(['dashboard']));
+        this.router.navigate(['home']));
+      } else if(localStorage.getItem("userType") == "admin"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['categories']));
       }
     }
 

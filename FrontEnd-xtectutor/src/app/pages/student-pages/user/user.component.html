@@ -67,7 +67,7 @@
 
         <div class="row">
           <div class="col-md-5 pr-1" style="margin-top: 50px; margin-bottom: 43px;">
-            <a (click)="modifyPassword()" class="form-group">Modificar contraseña</a>  
+            <a (click)="openModal(update_password)" class="form-group">Modificar contraseña</a>  
           </div>
         </div>
       </div>
@@ -75,8 +75,20 @@
     </div>
   </div>
 
-  <div class="col-md-12">
-    <my-entries-table></my-entries-table>
+
+  <div class="col-md-12" style="margin-top: 43px;">
+    <div class="card">
+        <div class="modal-header">
+            <h3 class="card-title text-primary">Mis entradas de conocimiento</h3>
+        </div>
+        <div class="card-body">
+          <my-entries-table></my-entries-table>
+        </div>
+        <div class="modal-footer">
+            <p class="text-primary" style="padding-left: 0;">Última actualización: 00:00:00</p>
+        </div>
+    </div>
+    
   </div>
 
 </div>
@@ -96,4 +108,42 @@
       <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
       <button type="button" class="btn btn-danger" (click)="modal.close()">No</button>
   </div>
+</ng-template>
+
+<ng-template #update_password let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Modificar contraseña</b></h4>
+  </div>
+  <div class="modal-body">
+      <form>
+          <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Digite su contraseña actual (*)</label>
+                  <input #currentPassword required type="text" class="form-control" >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Digite nueva contraseña (*)</label>
+                  <input #newPassword required type="text" class="form-control" >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Vuelva a digitar nueva contraseña (*)</label>
+                  <input #confirmationPassword required type="text" class="form-control" >
+                </div>
+              </div>
+            </div>
+         </form>
+  </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Actualizar</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+    </div>
 </ng-template>
