@@ -10,16 +10,26 @@ import { UserComponent }            from '../../pages/student-pages/user/user.co
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { EntriesTableComponent } from 'app/data-tables/entries-table/entries-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(StudentLayoutRoutes),
     FormsModule,
-    NgbModule
+    NgbModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   declarations: [
     HomeComponent,
     UserComponent,
+    EntriesTableComponent
   ]
 })
 

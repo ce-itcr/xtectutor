@@ -1,0 +1,59 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p style="color:rgb(21, 21, 194)"><b>CATEGORÍA</b></p></th>
+      <td mat-cell *matCellDef="let row"> <b>Tema:</b> {{row.subject}} <br> <b>Curso:</b> {{row.course}} <br> <b>Carrera:</b> {{row.career}} </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p style="color:rgb(21, 21, 194)"><b>TÍTULO Y DESCRIPCIÓN</b></p></th>
+      <td mat-cell *matCellDef="let row"> <b> {{row.title}} </b> <br> {{row.description}}  </td>
+    </ng-container>
+
+    <!-- Visibility Column -->
+    <ng-container matColumnDef="visibility">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p style="color:rgb(21, 21, 194)"><b>VISIBILIDAD</b></p></th>
+      <td mat-cell *matCellDef="let row"> {{row.visibility}} <button class="btn btn-sm btn-danger btn-round btn-icon " style="color:black"><i class="fa fa-eye "></i></button> </td>
+    </ng-container>
+
+    <!-- Creation Date Column -->
+    <ng-container matColumnDef="creationDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header ><p style="color:rgb(21, 21, 194)"><b>FECHA DE CREACIÓN</b></p></th>
+      <td mat-cell *matCellDef="let row"> {{row.creationDate}} <br> {{row.creationHour}} </td>
+    </ng-container>
+
+    <!-- Last Update Column -->
+    <ng-container matColumnDef="lastUpdate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p style="color:rgb(21, 21, 194)"><b>ÚLTIMA MODIFICACIÓN</b></p></th>
+      <td mat-cell *matCellDef="let row"> {{row.lastUpdate}} <br> {{row.updateHour}} </td>
+    </ng-container>
+
+    <!-- Stats Column -->
+    <ng-container matColumnDef="stats">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p style="color:rgb(21, 21, 194)"><b>ESTADÍSITCAS</b></p></th>
+      <td mat-cell *matCellDef="let row"> <b>Vistas:</b> {{row.views}} <br> <b>Valor:</b> {{row.value}} <br> <b>Comentarios:</b> {{row.comments}} </td>
+    </ng-container>
+    
+    <!-- Stats Edit -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p style="color:rgb(21, 21, 194)"><b>EDITAR</b></p></th>
+      <td mat-cell *matCellDef="let row"> 
+        
+        <button class="btn btn-sm btn-danger btn-round btn-icon" style="color:black" (click)="onNavigate(item[2])"><i class="fa fa-pencil "></i></button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataSource?.data.length"
+      [pageIndex]="0"
+      [pageSize]="50"
+      [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+</div>
