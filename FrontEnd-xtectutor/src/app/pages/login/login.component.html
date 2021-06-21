@@ -4,26 +4,65 @@
         <div class="imgcontainer">
           <img src="./../../../assets/img/xtectutor.png" alt="xtecdigital-logo" class="logo">
         </div>
-  
         <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <label><b>Tipo de Usuario</b></label>
+              <select #type class="form-control " style="margin-bottom: 20px;margin-top: 10px;">
+                <option value="student">Estudiante</option>
+                <option value="professor">Profesor</option>
+                <option value="admin">Administrador</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label><b>Identificador de Usuario (*)</b></label>
+              <input type="text" #username placeholder="Escriba su identificador de usuario" class="form-control ">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <label><b>Contraseña (*)</b></label>
+              <input #loginPassword id="loginPassword" placeholder="Escriba su contraseña" type="password" class="form-control" >
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 10px;" (click)="showPassword('loginPassword')">
+                <i class="fa fa-eye "></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-block text-uppercase" style="background-color: #14447c; margin-bottom: 25px;margin-top: 50px;" (click)="verifyLogin(username.value,loginPassword.value, type.value)">Iniciar Sesión</button>
+
+        </div>
+        
+  
+        <!--<div class="container">
 
           <label><b>Tipo de Usuario</b></label>
-          <select #type required class="form-control rounded-pill border-0 shadow-sm px-4" style="margin-bottom: 20px;margin-top: 10px;">
+          <select #type required class="form-control " style="margin-bottom: 20px;margin-top: 10px;">
             <option value="student">Estudiante</option>
             <option value="professor">Profesor</option>
             <option value="admin">Administrador</option>
           </select>
 
           <label><b>Identificador de Usuario</b></label>
-          <input type="text" #username placeholder="Escriba su identificador de usuario" required class="form-control rounded-pill border-0 shadow-sm px-4">
+          <input type="text" #username placeholder="Escriba su identificador de usuario" class="form-control ">
   
-          <label><b>Contraseña</b></label>
-          <input type="password" #password placeholder="Escriba su contraseña" required class="form-control rounded-pill border-0 shadow-sm px-4">
-  
+          <div class="row">
+            <div class="col-md-10">
+              <label><b>Contraseña</b></label>
+              <input type="password" id="loginPassword" #password placeholder="Escriba su contraseña" class="form-control ">
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword()">
+                <i class="fa fa-eye "></i>
+              </button>
+            </div>
+          </div>
           <button type="button" class="btn btn-primary btn-block text-uppercase" style="background-color: #14447c; margin-bottom: 25px;margin-top: 50px;" (click)="verifyLogin(username.value,password.value, type.value)">Iniciar Sesión</button>
-        </div>
-
-
+        </div>-->
   
       </form>
       </div>

@@ -12,7 +12,7 @@
             <div class="author">
               <a href="#">
                 <img class="avatar border-gray" src="assets/img/default-avatar.png" alt="...">
-                <h5 class="title">{{ item.fullName }}</h5>
+                <h5 class="title">{{ item.adminName }}</h5>
               </a>
               <p class="description">
                 
@@ -85,13 +85,20 @@
       <div class="col-md-12" style="margin-top: 43px;">
         <div class="card">
             <div class="modal-header">
+              <div class="col-md-10">
                 <h3 class="card-title text-primary">Lista de administradores</h3>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute;right: 0px;" (click)="updateAdminList()">
+                  <i class="fa fa-refresh "></i>
+                </button>
+              </div>
+                
             </div>
             <div class="card-body">
                 <admins-table></admins-table>
             </div>
             <div class="modal-footer">
-                <p class="text-primary" style="padding-left: 0;">Última actualización: 00:00:00</p>
             </div>
         </div>
         
@@ -116,41 +123,50 @@
 </ng-template>
 
 <ng-template #update_password let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Modificar contraseña</b></h4>
-    </div>
-    <div class="modal-body">
-        <form>
+  <div class="modal-header">
+      <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Modificar contraseña</b></h4>
+  </div>
+  <div class="modal-body">
+      <form>
             <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Digite su contraseña actual (*)</label>
-                    <input #currentPassword required type="text" class="form-control" >
-                  </div>
-                </div>
+              <div class="col-md-10">
+                <label><b>Digite su contraseña actual (*)</b></label>
+                <input #currentPassword id="currentPassword" required type="password" class="form-control" >
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Digite nueva contraseña (*)</label>
-                    <input #newPassword required type="text" class="form-control" >
-                  </div>
-                </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('currentPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Vuelva a digitar nueva contraseña (*)</label>
-                    <input #confirmationPassword required type="text" class="form-control" >
-                  </div>
-                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <label><b>Digite la nueva contraseña (*)</b></label>
+                <input #newPassword id="newPassword" required type="password" class="form-control" >
               </div>
-           </form>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('newPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <label><b>Vuelva a digitar la nueva contraseña (*)</b></label>
+                <input #confirmationPassword id="confirmationPassword" required type="password" class="form-control" >
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('confirmationPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
+              </div>
+            </div>
+         </form>
+  </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="updatePassword(currentPassword.value, newPassword.value, confirmationPassword.value)" (click)="modal.close()">Actualizar</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
     </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Actualizar</button>
-          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
-      </div>
 </ng-template>
 
 <ng-template #create_admin let-modal>
@@ -162,7 +178,7 @@
         <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Digite nombre y apellidos del admin (*)</label>
+                <label><b>Digite nombre y apellidos del admin (*)</b></label>
                 <input #name required type="text" class="form-control" >
               </div>
             </div>
@@ -170,23 +186,43 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Digite correo institucional del admin (*)</label>
-                <input #mail required type="text" class="form-control" >
+                <label><b>Digite correo institucional del admin (*)</b></label>
+                <input #mail required type="mail" class="form-control" >
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Digite identificador del admin (*)</label>
+                <label><b>Digite identificador del admin (*)</b></label>
                 <input #username required type="text" class="form-control" >
               </div>
             </div>
           </div>
-       </form>
-    </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label><b>Digite contraseña del admin (*)</b></label>
+                <input #password required type="text" class="form-control" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label><b>Seleccione el Campus (*)</b></label>
+              <select #campus class="form-control " style="margin-bottom: 20px;margin-top: 10px;">
+                <option value="cartago">Central,Cartago</option>
+                <option value="alajuela">Interuniversitaria,Alajuela</option>
+                <option value="sanjose">Centro Tecnológico,San José</option>
+                <option value="limon">Sede,Limón</option>
+              </select>
+            </div>
+          </div>
+          
+          </form>
+          </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Aceptar</button>
+          <button type="button" class="btn btn-success" (click)="createAdmin(name.value,mail.value,username.value,campus.value, password.value)" (click)="modal.close()" >Crear administrador</button>
           <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
       </div>
 </ng-template>

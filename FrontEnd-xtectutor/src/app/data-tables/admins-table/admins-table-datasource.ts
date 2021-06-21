@@ -27,7 +27,8 @@ const EXAMPLE_DATA: AdminsTableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class AdminsTableDataSource extends DataSource<AdminsTableItem> {
-  data: AdminsTableItem[] = EXAMPLE_DATA;
+  localData = localStorage.getItem("adminsList");
+  data: AdminsTableItem[] = this.localData ? JSON.parse(this.localData) : [];
   paginator: MatPaginator;
   sort: MatSort;
 

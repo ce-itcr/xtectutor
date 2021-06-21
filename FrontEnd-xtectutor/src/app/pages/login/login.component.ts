@@ -12,8 +12,15 @@ import { CommunicationService } from 'app/communication/communication.service';
 })
 
 export class LoginComponent{
-  constructor(private router: Router, private CS:CommunicationService) {
+  constructor(private router: Router, private CS:CommunicationService) {}
 
+  showPassword(inputId){
+    var passwordInput = (<HTMLInputElement>document.getElementById(inputId));
+      if(passwordInput.type == "password"){
+        passwordInput.type = "text";
+      } else {
+        passwordInput.type = "password";
+      }
   }
 
   //VERIFICA QUE LOS DATOS INGRESADOS PERTENEZCAN A UN USUARIO REGISTRADO
@@ -35,8 +42,8 @@ export class LoginComponent{
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['categories']));
     }
-
-
   }
+
+
 
 }

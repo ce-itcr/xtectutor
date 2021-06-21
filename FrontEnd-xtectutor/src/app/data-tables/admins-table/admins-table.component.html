@@ -23,7 +23,7 @@
       <th mat-header-cell *matHeaderCellDef><p class="text-primary"></p></th>
       <td mat-cell *matCellDef="let row"> 
         
-        <button class="btn btn-block btn-primary btn-round btn-icon" (click)="onNavigate(item[2])"><i class="fa fa-trash "></i></button>
+        <button class="btn btn-block btn-primary btn-round btn-icon" (click)="openModal(remove_admin)"  (click)="setAdminToRemove(row.username)"><i class="fa fa-trash "></i></button>
 
       </td>
     </ng-container>
@@ -39,3 +39,23 @@
       [pageSizeOptions]="[25, 50, 100, 250]">
   </mat-paginator>
 </div>
+
+
+<ng-template #remove_admin let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Eliminar Administrador</b></h4>
+  </div>
+  <div class="modal-body">
+   
+    <div class="row">
+      <div class="col-md-12">
+        <label>Está Seguro que desea eliminar al usuario: <b>{{adminToRemove}}</b></label>
+      </div>
+    </div>
+        
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="removeAdmin()" (click)="modal.close()" >Eliminar administrador</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
