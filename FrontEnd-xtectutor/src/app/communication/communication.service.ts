@@ -83,7 +83,7 @@ export class CommunicationService {
       }
       localStorage.setItem("careersList", JSON.stringify(data));
     }, error => {
-      alert("Error al obtener lista de administradores")
+      alert("Error al obtener lista de carreras")
     })
   }
 
@@ -98,7 +98,22 @@ export class CommunicationService {
       }
       localStorage.setItem("coursesList", JSON.stringify(data));
     }, error => {
-      alert("Error al obtener lista de administradores")
+      alert("Error al obtener lista de cursos")
+    })
+  }
+
+  getSubjects(){
+    let url = "https://sheet.best/api/sheets/2bd3dc67-3b3e-4429-81db-5a9a70755379/tabs/subjectsdb";
+    return this.http.get<any>(url).subscribe(res => {
+      var data = [];
+      var cont = 0;
+      while(cont < res.length){
+        data.push(res[cont]);
+        cont++;
+      }
+      localStorage.setItem("subjectsList", JSON.stringify(data));
+    }, error => {
+      alert("Error al obtener lista de temas")
     })
   }
 

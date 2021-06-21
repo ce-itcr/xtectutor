@@ -20,9 +20,17 @@ export class CategoriesComponent implements OnInit{
     ngOnInit(){
       this.CS.getCareers();     
       this.CS.getCourses(); 
+      this.CS.getSubjects();
     }
 
     openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
+
+    updateCategoriesList(){
+        this.CS.getCareers();
+        this.CS.getCourses(); 
+        this.CS.getSubjects();
+        location.reload();
+    }
 
     createCareer(careerName){
         this.CS.createCareer(careerName).subscribe(res => {

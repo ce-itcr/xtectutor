@@ -2,6 +2,38 @@
     <div class="col-md-8">
         <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm" style="width: 350px;" (click)="openModal(select_category)">Crear nueva categoría</button>
     </div>
+    <div class="col-md-12" style="margin-top: 43px;">
+        <div class="card">
+            <div class="modal-header">
+              <div class="col-md-10">
+                <h3 class="card-title text-primary">Categorías disponibles</h3>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute;right: 0px;" (click)="updateCategoriesList()">
+                  <i class="fa fa-refresh "></i>
+                </button>
+              </div>
+                
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <h6><b>Carreras:</b></h6>
+                    <careers-table></careers-table>
+                </div>
+                <div class="" style="margin-top:20px;">
+                    <h6><b>Cursos:</b></h6>
+                    <courses-table></courses-table>
+                </div>
+                <div class="" style="margin-top:20px;">
+                    <h6><b>Temas:</b></h6>
+                    <subjects-table></subjects-table>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        
+      </div>
 </div>
 
 <ng-template #select_category let-modal>
