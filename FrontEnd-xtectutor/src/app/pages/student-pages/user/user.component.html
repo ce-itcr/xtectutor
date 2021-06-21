@@ -117,33 +117,43 @@
   <div class="modal-body">
       <form>
           <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Digite su contraseña actual (*)</label>
-                  <input #currentPassword required type="text" class="form-control" >
-                </div>
+
+              <div class="col-md-10">
+                <label>Digite su contraseña actual (*)</label>
+                <input #currentPassword id="currentPassword" required type="password" class="form-control" >
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('currentPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Digite nueva contraseña (*)</label>
-                  <input #newPassword required type="text" class="form-control" >
-                </div>
+              <div class="col-md-10">
+                <label>Digite la nueva contraseña (*)</label>
+                <input #newPassword id="newPassword" required type="password" class="form-control" >
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('newPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Vuelva a digitar nueva contraseña (*)</label>
-                  <input #confirmationPassword required type="text" class="form-control" >
-                </div>
+              <div class="col-md-10">
+                <label>Vuelva a digitar la nueva contraseña (*)</label>
+                <input #confirmationPassword id="confirmationPassword" required type="password" class="form-control" >
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('confirmationPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
               </div>
             </div>
          </form>
   </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Actualizar</button>
+        <button type="button" class="btn btn-success" (click)="updatePassword(currentPassword.value, newPassword.value, confirmationPassword.value)" (click)="modal.close()">Actualizar</button>
         <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
     </div>
 </ng-template>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 
 @Component({
     selector: 'profile-cmp',
@@ -13,20 +14,19 @@ export class ProfileComponent implements OnInit{
     userEntries: any;
     currentUsername = localStorage.getItem("currentUsername");
 
-    constructor(private http:HttpClient, private modal:NgbModal){}
+    constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService){}
 
     ngOnInit(){
-        this.getStudentsData();
+        this.getAdminData();
     }
 
     openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
-    getStudentsData(){
-        let url = "https://sheet.best/api/sheets/ddfcf151-522d-44c6-81f7-714adafb7598/tabs/admindb/username/"+this.currentUsername;
-        return this.http.get(url).subscribe(res => {
-          this.userData = res;
-          console.log(this.userData);
-        });
-      }
+    getAdminData(){
+      this.CS.getAdminData(this.currentUsername).subscribe(res => {
+        this.userData = res;
+        //console.log(this.userData)
+      })
+    }
     
 }

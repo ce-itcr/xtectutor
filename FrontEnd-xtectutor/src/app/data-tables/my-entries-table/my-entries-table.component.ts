@@ -27,4 +27,5 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
+
 }

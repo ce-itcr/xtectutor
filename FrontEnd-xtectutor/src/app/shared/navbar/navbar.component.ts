@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Location} from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
+import { CommunicationService } from 'app/communication/communication.service';
 
 @Component({
     moduleId: module.id,
@@ -29,7 +30,7 @@ export class NavbarComponent implements OnInit{
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;
 
-    constructor(private http:HttpClient, private modal:NgbModal, location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router) {
+    constructor(private http:HttpClient, private modal:NgbModal, location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router, private CS:CommunicationService) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
