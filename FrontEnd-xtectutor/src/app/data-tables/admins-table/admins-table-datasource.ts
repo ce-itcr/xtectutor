@@ -11,6 +11,10 @@ export interface AdminsTableItem {
   username: number;
 }
 
+declare global{
+  var flag: any;
+}
+
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: AdminsTableItem[] = [
   {adminName: 'Angelo Jesus', mail: 'angelortizv@profesortec.cr', username: 301230123},

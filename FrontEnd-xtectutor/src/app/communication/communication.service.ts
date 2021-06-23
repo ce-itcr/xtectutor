@@ -46,7 +46,7 @@ export class CommunicationService {
     return this.http.patch(url, body);
   }
 
-  getAdminsList(){
+  getAdminsList(key){
     let url = "https://sheet.best/api/sheets/2bd3dc67-3b3e-4429-81db-5a9a70755379/tabs/admindb";
     return this.http.get<any>(url).subscribe(res => {
       var data = [];
@@ -56,6 +56,10 @@ export class CommunicationService {
         cont++;
       }
       localStorage.setItem("adminsList", JSON.stringify(data));
+      if(key){
+        globalThis.flag = 1;
+        this.router.navigateByUrl("/categories");
+      }
     }, error => {
       alert("Error al obtener lista de administradores")
     })

@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit{
     constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService){}
 
     ngOnInit(){
-      this.CS.getAdminsList();
+      this.CS.getAdminsList(false);
       this.getAdminData();
     }
 
@@ -62,12 +62,8 @@ export class ProfileComponent implements OnInit{
 
     createAdmin(adminName, mail, username, campus, password){
       this.CS.createAdmin(username,password,adminName,mail, campus).subscribe(res => {
+        this.CS.getAdminsList(true);
         console.log(res);
       });
-    }
-
-    updateAdminList(){
-      this.CS.getAdminsList();
-      location.reload();
     }
 }

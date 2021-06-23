@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/communication/communication.service';
 import { AdminsTableDataSource, AdminsTableItem } from './admins-table-datasource';
@@ -18,7 +19,7 @@ export class AdminsTableComponent implements AfterViewInit, OnInit {
   dataSource: AdminsTableDataSource;
   adminToRemove;
 
-  constructor(private modal:NgbModal, private CS:CommunicationService){}
+  constructor(private modal:NgbModal, private CS:CommunicationService, private router: Router){}
 
   ngOnInit() {
     this.dataSource = new AdminsTableDataSource();
@@ -35,7 +36,8 @@ export class AdminsTableComponent implements AfterViewInit, OnInit {
 
   removeAdmin(){
     this.CS.removeAdmin(this.adminToRemove).subscribe(res => {
-      console.log(res);
+      globalThis.flag = 1;
+      this.router.navigateByUrl("/categories");
     })
   }
 
