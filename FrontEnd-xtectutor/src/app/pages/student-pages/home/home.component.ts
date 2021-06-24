@@ -9,18 +9,15 @@ import { Component, OnInit } from '@angular/core';
 
 export class HomeComponent implements OnInit{
 
-    careers = ['Ing. Computadores', 'Ing. Electronica', 'Ing. Computacion', 'Ing. Materiales', 'Ing. Construccion'];
+    careers = [];
     courses = [];
     subjects = [];
-
-    cont = 0
-
     currentCareer = '';
     currentCourse = '';
     currentSubject = '';
 
     ngOnInit(){
-      
+      this.generateCareers()
     }
 
     generateCareers(){
