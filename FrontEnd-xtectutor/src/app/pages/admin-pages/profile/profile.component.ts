@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/communication/communication.service';
 
@@ -15,9 +16,14 @@ export class ProfileComponent implements OnInit{
     currentUsername = localStorage.getItem("currentUsername");
     currentPassword = localStorage.getItem("currentPassword");
 
-    constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService){}
+    constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService, private router: Router){}
 
     ngOnInit(){
+      if(globalThis.flag == 1){
+        globalThis.flag = 0;
+
+        this.router.navigateByUrl('/categories')
+      }
       this.CS.getAdminsList(false);
       this.getAdminData();
     }
@@ -63,7 +69,6 @@ export class ProfileComponent implements OnInit{
     createAdmin(adminName, mail, username, campus, password){
       this.CS.createAdmin(username,password,adminName,mail, campus).subscribe(res => {
         this.CS.getAdminsList(true);
-        console.log(res);
       });
     }
 }

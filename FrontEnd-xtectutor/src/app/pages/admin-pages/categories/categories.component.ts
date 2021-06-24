@@ -20,41 +20,41 @@ export class CategoriesComponent implements OnInit{
 
     ngOnInit(){
 
+        this.CS.getCareers(false);     
+        this.CS.getCourses(false); 
+        this.CS.getSubjects(false);
+
         if(globalThis.flag == 1){
             globalThis.flag = 0;
             this.router.navigateByUrl("/profile");
         }
-
-        this.CS.getCareers();     
-        this.CS.getCourses(); 
-        this.CS.getSubjects();
     }
 
     openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
     updateCategoriesList(){
-        this.CS.getCareers();
-        this.CS.getCourses(); 
-        this.CS.getSubjects();
+        this.CS.getCareers(true);
+        this.CS.getCourses(true); 
+        this.CS.getSubjects(true);
         location.reload();
     }
 
     createCareer(careerName){
         this.CS.createCareer(careerName).subscribe(res => {
-            console.log(res);
+            this.CS.getCareers(true); 
         })
     }
     
     createCourse(courseName,courseCode,associatedCareer){
         //alert(courseName + courseCode +associatedCareer)
         this.CS.createCourse(courseName,courseCode,associatedCareer).subscribe(res => {
-            console.log(res);
+            this.CS.getCourses(true); 
         })
     }
 
     createSubject(subjectName,associatedCourse){
         this.CS.createSubject(subjectName,associatedCourse).subscribe(res => {
-            console.log(res);
+            this.CS.getSubjects(true);
         })
     }
 
