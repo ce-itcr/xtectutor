@@ -151,6 +151,15 @@ export class CommunicationService {
     return this.http.post(url, body);
   }
 
+  createEntry(username, creationDate, creationHour, title, description, entry, coauthors, career, course, subject, media){
+    let url = "https://sheet.best/api/sheets/26f96bb7-8a7e-4cce-a85f-34d4cb9fc3ff/tabs/entriesdb";
+    let body = {"username":username,"visibility":"public","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
+                "views":"0","rating":"0","comments":"0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
+                "subject":subject,"media":media
+              };
+    return this.http.post(url, body);
+  }
+
 
 
 

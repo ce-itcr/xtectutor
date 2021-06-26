@@ -19,6 +19,19 @@ export class NavbarComponent implements OnInit{
     private sidebarVisible: boolean;
 
     currentUsername = localStorage.getItem("currentUsername");
+    creationDate;
+    creationHour;
+    careers = [];
+    courses = [];
+    subjects = [];
+    currentCareer = '';
+    currentCourse = '';
+    currentSubject = '';
+    coAuthorsCounter = 0;
+    coAuthorsList = [];
+    mediaCounter = 0;
+    mediaList = [];
+
 
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;
@@ -29,13 +42,6 @@ export class NavbarComponent implements OnInit{
         this.sidebarVisible = false;
     }
 
-    careers = [];
-    courses = [];
-    subjects = [];
-    currentCareer = '';
-    currentCourse = '';
-    currentSubject = '';
-
     ngOnInit(){
         this.setCreateButtonStatus();
         var navbar : HTMLElement = this.element.nativeElement;
@@ -43,12 +49,19 @@ export class NavbarComponent implements OnInit{
         this.router.events.subscribe((event) => {
           this.sidebarClose();
        });
-
+       this.setCreationDate();
        this.generateCareers();
-
 
     }
 
+    setCreationDate(){
+      var today = new Date();
+      var date = today.getDate() +'/' + (today.getMonth()+1) + '/' + today.getFullYear();
+      this.creationDate = date;
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      this.creationHour = time;
+
+    }
 
     generateCareers(){
       this.careers = [];
@@ -129,6 +142,7 @@ export class NavbarComponent implements OnInit{
       }
       return 'Dashboard';
     }
+
     sidebarToggle() {
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
@@ -221,4 +235,52 @@ export class NavbarComponent implements OnInit{
         }
       }
 
+      public generateCoauthorsInputs(){
+        /*let row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `<br><input type="number" #coAuthor`+ this.coAuthorsCounter +`class="form-control">`;
+        row.id = 'coAuthor' + this.coAuthorsCounter;
+        document.querySelector('.showInputField').appendChild(row);
+        this.coAuthorsCounter++;
+        alert(row.id)*/
+        var textfield = document.createElement('input');
+        textfield.type = "number"; textfield.value = ""; textfield.id = "coAuthor"+this.coAuthorsCounter;
+        document.querySelector('.showInputField').appendChild(textfield);
+        this.coAuthorsCounter++;
+      }
+
+      public generateMediaInputs(){
+        var textfield = document.createElement('input');
+        textfield.type = "text"; textfield.value = ""; textfield.id = "link"+this.mediaCounter;
+        document.querySelector('.showMediaInputField').appendChild(textfield);
+        this.mediaCounter++;
+      }
+
+      addCoauthors(){
+        var localCounter = 0;
+        while(localCounter < this.coAuthorsCounter){
+          var coAuthorValue = <HTMLInputElement>document.getElementById("coAuthor" +localCounter);
+          this.coAuthorsList.push(coAuthorValue.value);
+          localCounter++;          
+        }
+      }
+
+      addMedia(){
+        var localCounter = 0;
+        while(localCounter < this.mediaCounter){
+          var mediaValue = <HTMLInputElement>document.getElementById("link" +localCounter);
+          this.mediaList.push(mediaValue.value);
+          localCounter++;          
+        }
+      }
+
+      createEntry(title, description, entry, career, course, subject){
+        this.addCoauthors();
+        this.addMedia();
+           
+        this.CS.createEntry(this.currentUsername, this.creationDate, this.creationHour, title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe(res => {
+          console.log(res);
+        })
+      
+      }
 }

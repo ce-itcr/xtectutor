@@ -64,26 +64,35 @@
         <div class="col-md-12 pr-1">
           <div class="form-group">
             <label><b>Descipción (*)</b></label>
-            <textarea #description required type="text" class="form-control" style="height: 200px;" maxlength="200"></textarea>
+            <textarea #description required type="text" class="form-control" style="height: 200px;" maxlength="650"></textarea>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12 pr-1">
           <div class="form-group">
-            <label><b>Entrada de Conocimiento (*)</b></label>
-            <textarea #input type="text" required class="form-control custom-input" style="height:500px" maxlength="500"></textarea>
+            <label><b>Entrada de Conocimiento (*)</b></label><br>
+            <textarea #entry type="text" required class="form-control" rows="20" cols="155" maxlength="4000"></textarea>
           </div>
         </div>
       </div>
       <div class="row">
+        <div class="col-md-12">
+          <label><b>Añadir coautores</b></label>
+        </div>
+        <div class="col-md-2 pr-1">
+          <button type="button" class="btn btn-block btn-primary btn-round btn-icon" (click)="generateCoauthorsInputs()"><i class="fa fa-plus "></i></button>
+        </div>
+
         <div class="col-md-5 pr-1">
-          <div class="form-group">
-            <label><b>Añadir coautores</b></label>
-            <input #coauthors type="text" class="form-control" >
+          <div class="form-group showInputField" >
+            <!--<input #coauthors type="number" class="form-control" >-->
+            <!--<div class="showInputField"></div>-->
           </div>
         </div>
+
       </div>
+
       <hr>
       <div class="row">
         <div class="col-md-5 pr-1">
@@ -94,7 +103,7 @@
       </div>
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <label for="course" style="margin-right: 20px;">Carrera: </label>
+          <label for="career" style="margin-right: 20px;">Carrera: </label>
           <select #career name="career" (change)="setCourses(career.value, course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
             <option selected>Seleccionar</option>
             <option *ngFor="let item of careers" [value]="item">
@@ -112,8 +121,8 @@
           </select>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <label for="course" style="margin-right: 20px;">Tema: </label>
-          <select #theme name="theme" id="theme" class="form-control rounded-pill border-0 shadow-sm px-4">
+          <label for="subject" style="margin-right: 20px;">Tema: </label>
+          <select #subject name="subject" id="subject" class="form-control rounded-pill border-0 shadow-sm px-4">
             <option selected>Seleccionar</option>
             <option *ngFor="let item of subjects" [value]="item">
               {{item}}
@@ -126,12 +135,20 @@
       <hr>
 
       <div class="row">
+        <div class="col-md-12">
+          <label><b>Añadir links a imágenes </b></label>
+        </div>
+        <div class="col-md-2 pr-1">
+          <button type="button" class="btn btn-block btn-primary btn-round btn-icon" (click)="generateMediaInputs()"><i class="fa fa-plus "></i></button>
+        </div>
+
         <div class="col-md-5 pr-1">
-          <div class="form-group">
-            <label>Añadir imágenes:  </label>
-            <button type="submit" class="btn btn-primary"  >Subir archivo</button>
+          <div class="form-group showMediaInputField" >
+            <!--<input #coauthors type="number" class="form-control" >-->
+            <!--<div class="showInputField"></div>-->
           </div>
         </div>
+
       </div>
       
       <hr>
@@ -140,6 +157,7 @@
         <div class="col-md-5 pr-1">
           <div class="form-group">
             <label style="color: slategrey;"><b>Identificador de usuario: </b> {{ currentUsername }}</label>
+            <label style="color: slategrey;"><b>Fecha de creación: </b> {{ creationDate }}</label>
           </div>
         </div>
       </div>
@@ -147,7 +165,7 @@
     </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="createCourse(course_id.value, course_name.value, course_credits.value, course_career.value)" (click)="modal.close()">Crear</button>
+      <button type="button" class="btn btn-success" (click)="createEntry(title.value, description.value, entry.value, career.value, course.value, subject.value)" (click)="modal.close()">Crear</button>
       <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
