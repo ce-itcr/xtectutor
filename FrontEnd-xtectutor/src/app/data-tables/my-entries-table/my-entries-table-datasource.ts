@@ -12,6 +12,8 @@ export interface MyEntriesTableItem {
   title: string;
   description: string;
   visibility: string;
+  visibilityType: string;
+  visibilityColor: string;
   creationDate: string;
   creationHour: string;
   lastUpdate: string;
@@ -24,9 +26,9 @@ export interface MyEntriesTableItem {
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: MyEntriesTableItem[] = [
   {subject: 'Ley de Tensiones de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Tensiones de Kirchhoff', description: 'Breve introducción a la Ley de Tensiones de Kirchhoff',
-  visibility: 'Público', creationDate: '10/06/2021', creationHour: '12:00:00', lastUpdate: '17/06/2021', updateHour: '13:00:00', views: 13, value: 4.5, comments: 3},
+  visibility: 'Público', visibilityType: 'fa fa-eye', visibilityColor: 'btn-primary', creationDate: '10/06/2021', creationHour: '12:00:00', lastUpdate: '17/06/2021', updateHour: '13:00:00', views: 13, value: 4.5, comments: 3},
   {subject: 'Ley de Corrientes de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Corrientes de Kirchhoff', description: 'Breve introducción a la Ley de Corrientes de Kirchhoff',
-  visibility: 'Público', creationDate: '6/06/2021', creationHour: '14:00:00', lastUpdate: '15/06/2021', updateHour: '8:00:00', views: 20, value: 4, comments: 7},
+  visibility: 'Público', visibilityType: 'fa fa-eye', visibilityColor: 'btn-primary', creationDate: '6/06/2021', creationHour: '14:00:00', lastUpdate: '15/06/2021', updateHour: '8:00:00', views: 20, value: 4, comments: 7},
 ];
 
 /**

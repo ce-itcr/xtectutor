@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,15 @@ export class HomeComponent implements OnInit{
     currentCourse = '';
     currentSubject = '';
 
+    constructor(private router: Router){}
+
     ngOnInit(){
+      if(globalThis.flag == 1){
+        alert('HUlahula')
+        globalThis.flag = 0;
+        this.router.navigateByUrl('/user');
+      }
+
       this.generateCareers()
     }
 

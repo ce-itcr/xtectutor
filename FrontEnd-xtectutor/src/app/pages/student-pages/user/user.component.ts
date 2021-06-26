@@ -17,7 +17,7 @@ export class UserComponent implements OnInit{
     constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService){}
 
     ngOnInit(){
-      this.CS.getStudentEntries(this.currentUsername);
+      this.CS.getStudentEntries(this.currentUsername, false);
       this.getStudentsData();
 
     }
