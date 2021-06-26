@@ -58,6 +58,10 @@ export class UserComponent implements OnInit{
       }
     }
 
+    updateEntriesList(){
+      location.reload();
+    }
+
 
 
 }

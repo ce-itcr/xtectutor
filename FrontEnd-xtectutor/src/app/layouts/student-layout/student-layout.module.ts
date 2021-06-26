@@ -15,7 +15,6 @@ import { MyEntriesTableComponent } from 'app/data-tables/my-entries-table/my-ent
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { InfoComponent } from 'app/pages/admin-pages/info/info.component';
 import { TermsComponent } from 'app/pages/student-pages/terms/terms.component';
 
 
@@ -32,7 +31,7 @@ import { TermsComponent } from 'app/pages/student-pages/terms/terms.component';
   declarations: [
     HomeComponent,
     UserComponent,
-    InfoComponent,
+    //InfoComponent,
     TermsComponent,
     EntriesTableComponent,
     MyEntriesTableComponent
