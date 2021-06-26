@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 import { CareersTableDataSource, CareersTableItem } from './careers-table-datasource';
 
 @Component({
@@ -20,7 +21,7 @@ export class CareersTableComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name','edit'];
 
-  constructor(private modal:NgbModal){}
+  constructor(private modal:NgbModal, private CS:CommunicationService){}
 
   ngOnInit() {
     this.dataSource = new CareersTableDataSource();
@@ -36,5 +37,23 @@ export class CareersTableComponent implements AfterViewInit, OnInit {
 
   setCareerToRemove(career){
     this.careerToRemove = career;
+  }
+
+  removeCareer(){
+    this.CS.checkCareerStatus(this.careerToRemove).subscribe(res => {
+      //alert(res)
+      if(res == ""){
+        /*his.CS.removeCourse(this.careerToRemove).subscribe(res => {
+          alert("Curso " + this.careerToRemove + " eliminado exitosamente y sus temas asociados")
+          location.reload();
+        })*/
+        this.CS.removeCareer(this.careerToRemove).subscribe(res => {
+          alert("Carrera " + this.careerToRemove + " eliminado exitosamente y sus respectivos cursos");
+          location.reload()
+        })
+      } else {
+        alert("No se puede eliminar la carrera " + this.careerToRemove + " porque contiene entradas de conocimiento.")
+      }
+    })
   }
 }

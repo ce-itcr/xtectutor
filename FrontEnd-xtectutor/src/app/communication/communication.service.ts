@@ -10,12 +10,12 @@ export class CommunicationService {
   constructor(private http: HttpClient, private router: Router) { }
 
   getStudentData(username){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/username/"+username;
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/username/"+username;
     return this.http.get(url);
   }
 
   getStudentEntries(username){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/entriesdb/username/"+username;
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/username/"+username;
     return this.http.get<any>(url).subscribe(res => {
       var data = [];
       var cont = 0;
@@ -30,13 +30,13 @@ export class CommunicationService {
   }
 
   updateStudentPassword(username, password){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/userdb/username/"+ username;
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb/username/"+ username;
     let body = {"password":password};
     return this.http.patch(url, body);
   }
 
   createEntry(username, creationDate, creationHour, title, description, entry, coauthors, career, course, subject, media){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/entriesdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb";
     let body = {"username":username,"visibility":"public","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
                 "views":"0","rating":"0","comments":"0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
                 "subject":subject,"media":media
@@ -45,18 +45,18 @@ export class CommunicationService {
   }
 
   getAdminData(username){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/admindb/username/"+username;
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb/username/"+username;
     return this.http.get(url);
   }
 
   updateAdminPassword(username, password){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/admindb/username/"+ username;
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb/username/"+ username;
     let body = {"password":password};
     return this.http.patch(url, body);
   }
 
   getAdminsList(key){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/admindb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb";
     return this.http.get<any>(url).subscribe(res => {
       var data = [];
       var cont = 0;
@@ -75,18 +75,18 @@ export class CommunicationService {
   }
 
   createAdmin(username,password,adminName,mail, campus){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/admindb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb";
     let body = {"username":username,"password":password,"userType":"admin","adminName":adminName,"mail":mail,"campus":campus};
     return this.http.post(url, body);
   }
 
   removeAdmin(username){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/admindb/username/"+username;
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb/username/"+username;
     return this.http.delete(url);
   }
 
   getCareers(key){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/careersdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/careersdb";
     return this.http.get<any>(url).subscribe(res => {
       var data = [];
       var cont = 0;
@@ -105,7 +105,7 @@ export class CommunicationService {
   }
 
   getCourses(key){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/coursesdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb";
     return this.http.get<any>(url).subscribe(res => {
       var data = [];
       var cont = 0;
@@ -124,7 +124,7 @@ export class CommunicationService {
   }
 
   getSubjects(key){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/subjectsdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb";
     return this.http.get<any>(url).subscribe(res => {
       var data = [];
       var cont = 0;
@@ -143,19 +143,19 @@ export class CommunicationService {
   }
 
   createCareer(careerName){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/careersdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/careersdb";
     let body = {"careerName":careerName};
     return this.http.post(url, body);
   }
 
   createCourse(courseName,courseCode,associatedCareer){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/coursesdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb";
     let body = {"category":"course","name":courseName,"code":courseCode,"associatedCareer":associatedCareer};
     return this.http.post(url, body);
   }
 
   createSubject(subjectName,associatedCourse){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/subjectsdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb";
     let body = {"category":"subject","subjectName":subjectName,"associatedCourse":associatedCourse};
     return this.http.post(url, body);
   }
@@ -164,23 +164,69 @@ export class CommunicationService {
     this.removeStudents();
     this.removeProfessors();
 
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/userdb";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb";
     return this.http.post(url, data);
 
   }
 
   removeStudents(){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/userdb/userType/student";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb/userType/student";
     return this.http.delete(url).subscribe(res => {
       console.log(res);
     });
   }
 
   removeProfessors(){
-    let url = "https://sheet.best/api/sheets/f435a225-28f4-4ded-b909-57ac4d2e4b81/tabs/userdb/userType/professor";
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb/userType/professor";
     return this.http.delete(url).subscribe(res => {
       console.log(res);
     });
+  }
+
+  checkSubjectStatus(subject){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/subject/"+subject;
+    return this.http.get(url);
+  }
+
+  removeSubject(subject){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb/subjectName/"+subject;
+    return this.http.delete(url);
+  }
+
+  checkCourseStatus(course){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/course/"+course;
+    return this.http.get(url);
+  }
+
+  removeCourse(course){
+    this.removeAssociatedCourses(course).subscribe(res => {
+      console.log(res);
+    });
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb/name/"+course;
+    return this.http.delete(url);
+  }
+  
+  removeAssociatedCourses(course){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb/associatedCourse/"+course;
+    return this.http.delete(url);
+  }
+
+  checkCareerStatus(career){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/career/"+career;
+    return this.http.get(url);
+  }
+
+  removeCareer(career){
+    this.removeAssociatedCareer(career).subscribe(res => {
+      console.log(res);
+    });
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/careersdb/careerName/"+career;
+    return this.http.delete(url);
+  }
+
+  removeAssociatedCareer(career){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb/associatedCareer/"+career;
+    return this.http.delete(url);
   }
 
 

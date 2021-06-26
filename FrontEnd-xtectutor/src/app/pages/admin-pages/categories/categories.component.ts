@@ -15,7 +15,6 @@ export class CategoriesComponent implements OnInit{
     careersData;
     coursesData;
 
-
     constructor(private modal:NgbModal, private CS:CommunicationService, private router: Router){}
 
     ngOnInit(){
