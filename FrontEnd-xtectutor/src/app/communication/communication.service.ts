@@ -196,5 +196,51 @@ export class CommunicationService {
     });
   }
 
+  checkSubjectStatus(subject){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/subject/"+subject;
+    return this.http.get(url);
+  }
+
+  removeSubject(subject){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb/subjectName/"+subject;
+    return this.http.delete(url);
+  }
+
+  checkCourseStatus(course){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/course/"+course;
+    return this.http.get(url);
+  }
+
+  removeCourse(course){
+    this.removeAssociatedCourses(course).subscribe(res => {
+      console.log(res);
+    });
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb/name/"+course;
+    return this.http.delete(url);
+  }
+  
+  removeAssociatedCourses(course){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb/associatedCourse/"+course;
+    return this.http.delete(url);
+  }
+
+  checkCareerStatus(career){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/career/"+career;
+    return this.http.get(url);
+  }
+
+  removeCareer(career){
+    this.removeAssociatedCareer(career).subscribe(res => {
+      console.log(res);
+    });
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/careersdb/careerName/"+career;
+    return this.http.delete(url);
+  }
+
+  removeAssociatedCareer(career){
+    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb/associatedCareer/"+career;
+    return this.http.delete(url);
+  }
+
 
 }

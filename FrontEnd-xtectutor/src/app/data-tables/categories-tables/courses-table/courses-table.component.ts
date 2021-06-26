@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 import { CoursesTableDataSource, CoursesTableItem } from './courses-table-datasource';
 
 @Component({
@@ -20,7 +21,7 @@ export class CoursesTableComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'code', 'associatedCareer', 'edit'];
 
-  constructor(private modal:NgbModal){}
+  constructor(private modal:NgbModal, private CS:CommunicationService){}
 
   ngOnInit() {
     this.dataSource = new CoursesTableDataSource();
@@ -37,4 +38,19 @@ export class CoursesTableComponent implements AfterViewInit, OnInit {
   setCourseToRemove(career){
     this.courseToRemove = career;
   }
+
+  removeCourse(){
+    //alert(this.courseToRemove)
+    this.CS.checkCourseStatus(this.courseToRemove).subscribe(res => {
+      if(res = []){
+        this.CS.removeCourse(this.courseToRemove).subscribe(res => {
+          alert("Curso " + this.courseToRemove + " eliminado exitosamente y sus temas asociados")
+          location.reload();
+        })
+      } else {
+        alert("No se puede eliminar el curso " + this.courseToRemove + " porque contiene entradas de conocimiento.")
+      }
+    })
+  }
+
 }
