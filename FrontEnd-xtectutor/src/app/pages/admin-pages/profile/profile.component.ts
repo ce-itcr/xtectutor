@@ -73,6 +73,7 @@ export class ProfileComponent implements OnInit{
       this.CS.createAdmin(username,password,adminName,mail, campus).subscribe(res => {
         this.CS.getAdminsList(true);
       });
+      //alert("El usuario " + adminName + " fue creado exitosamente")
     }
 
     onFileChange(evt: any) {

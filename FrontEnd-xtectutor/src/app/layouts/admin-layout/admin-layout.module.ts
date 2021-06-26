@@ -19,6 +19,7 @@ import { AdminsTableComponent } from 'app/data-tables/admins-table/admins-table.
 import { CareersTableComponent } from 'app/data-tables/categories-tables/careers-table/careers-table.component';
 import { CoursesTableComponent } from 'app/data-tables/categories-tables/courses-table/courses-table.component';
 import { SubjectsTableComponent } from 'app/data-tables/categories-tables/subjects-table/subjects-table.component';
+import { InfoComponent } from 'app/pages/admin-pages/info/info.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { SubjectsTableComponent } from 'app/data-tables/categories-tables/subjec
   declarations: [
     ProfileComponent,
     CategoriesComponent,
+    InfoComponent,
     AdminsTableComponent,
     CareersTableComponent,
     CoursesTableComponent,

@@ -130,6 +130,16 @@ export class NavbarComponent implements OnInit{
       }
     }
 
+    toInfo(){
+      if(localStorage.getItem("userType") == "student"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['info']));
+      } else if(localStorage.getItem("userType") == "admin"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['info']));
+      }
+    }
+
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
       if(titlee.charAt(0) === '#'){

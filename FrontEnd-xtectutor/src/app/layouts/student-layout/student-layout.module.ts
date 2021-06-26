@@ -15,6 +15,7 @@ import { MyEntriesTableComponent } from 'app/data-tables/my-entries-table/my-ent
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { InfoComponent } from 'app/pages/admin-pages/info/info.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { MatSortModule } from '@angular/material/sort';
   declarations: [
     HomeComponent,
     UserComponent,
+    InfoComponent,
     EntriesTableComponent,
     MyEntriesTableComponent
   ]
