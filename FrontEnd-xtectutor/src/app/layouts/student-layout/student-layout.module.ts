@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { InfoComponent } from 'app/pages/admin-pages/info/info.component';
+import { TermsComponent } from 'app/pages/student-pages/terms/terms.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { InfoComponent } from 'app/pages/admin-pages/info/info.component';
     HomeComponent,
     UserComponent,
     InfoComponent,
+    TermsComponent,
     EntriesTableComponent,
     MyEntriesTableComponent
   ]

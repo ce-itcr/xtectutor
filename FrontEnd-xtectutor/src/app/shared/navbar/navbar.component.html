@@ -41,10 +41,23 @@
     </div>
 
     <div class=" justify-content-end">
-      <button type="submit" id="createButton" class="btn btn-primary" style="width: 145px;"  (click)="openModal(create_entry)">Crear</button>
+      <button type="submit" id="createButton" class="btn btn-primary" style="width: 145px;"  (click)="openModalmd(terms_of_service)">Crear</button>
     </div>
   </div>
 </nav>
+
+<ng-template #terms_of_service let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Términos y Condiciones de Servicio</h4>
+  </div>
+  <div class="modal-body">
+    Al crear una nueva entrada de conocimiento usted acepta los <a (click)="toTermsOfService()" (click)="modal.close()" class="text-danger">términos y condiciones de servicio</a> de la aplicación.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="openModal(create_entry)" (click)="modal.close()">Aceptar</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
 
 <ng-template #create_entry let-modal>
   <div class="modal-header">

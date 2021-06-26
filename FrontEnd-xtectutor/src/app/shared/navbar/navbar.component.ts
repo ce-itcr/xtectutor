@@ -109,6 +109,7 @@ export class NavbarComponent implements OnInit{
     }
 
     openModal(content){ this.modal.open(content,{size:'xl', centered:true});}
+    openModalmd(content){ this.modal.open(content,{size:'md', centered:true});}
 
     toUserProfile(){
       if(localStorage.getItem("userType") == "student"){
@@ -138,6 +139,11 @@ export class NavbarComponent implements OnInit{
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
         this.router.navigate(['info']));
       }
+    }
+
+    toTermsOfService(){
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate(['terms']));
     }
 
     getTitle(){
