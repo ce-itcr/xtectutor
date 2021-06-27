@@ -18,11 +18,15 @@ export class CommunicationService {
   }
 
   getStudentEntries(username, key){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/username/"+username;
-    return this.http.get<any>(url).subscribe(res => {
+    return this.http.post<any[]>("api/user/get/entries",
+    {
+      "username":username
+    }).subscribe(res => {
+      alert(res);
       var data = [];
       var cont = 0;
       while(cont < res.length){
+        alert(res[cont]);
         data.push(res[cont]);
         cont++;
       }
@@ -33,7 +37,7 @@ export class CommunicationService {
       }
     }, error => {
       alert("Error al obtener entradas de estudiante")
-    })
+    });
   }
 
   updateStudentPassword(username, password){
