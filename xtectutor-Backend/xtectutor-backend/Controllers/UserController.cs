@@ -76,8 +76,23 @@ namespace xtectutor_backend.Controllers
             while (data.Read())
             {
                 Debug.Print(data.GetValue(11).ToString());
+                string visibilityType = "";
+                string visibilityColor = "";
+
+                if (data.GetValue(0).ToString() == "pública")
+                {
+                    visibilityType = "fa fa-eye";
+                    visibilityColor = "btn-primary";
+                } else
+                {
+                    visibilityType = "fa fa-eye-slash";
+                    visibilityColor = "non-color";
+                }
+
                 JObject StudentEntry = new JObject(
                 new JProperty("visibility", data.GetValue(0).ToString()),
+                new JProperty("visibilityType", visibilityType),
+                new JProperty("visibilityColor", visibilityColor),
                 new JProperty("creationDate", data.GetValue(1).ToString()),
                 new JProperty("creationHour", data.GetValue(2).ToString()),
                 new JProperty("lastUpdate", data.GetValue(3).ToString()),
@@ -85,10 +100,10 @@ namespace xtectutor_backend.Controllers
                 new JProperty("views", data.GetValue(5).ToString()),
                 new JProperty("rating", data.GetValue(6).ToString()),
                 new JProperty("title", data.GetValue(7).ToString()),
-                new JProperty("_description", data.GetValue(8).ToString()),
-                new JProperty("CareerName", data.GetValue(9).ToString()),
-                new JProperty("CourseCode", data.GetValue(10).ToString()),
-                new JProperty("SubjectName", data.GetValue(11).ToString()),
+                new JProperty("description", data.GetValue(8).ToString()),
+                new JProperty("career", data.GetValue(9).ToString()),
+                new JProperty("course", data.GetValue(10).ToString()),
+                new JProperty("subject", data.GetValue(11).ToString()),
                 new JProperty("comments", AmountOfComments[data.GetValue(12).ToString()])
                 );
                 obj.Add(StudentEntry);
