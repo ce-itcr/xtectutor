@@ -173,5 +173,61 @@ namespace xtectutor_backend.Controllers
                 return BadRequest("Error al insertar");
             }
         }
+
+        [HttpPost]
+        [Route("api/user/update/entry")]
+        public IHttpActionResult userUpdateEntry([FromBody] JObject EntryInfo)
+        {
+
+            string EntryID = EntryInfo["username"] + "-" + EntryInfo["creationDate"] + "-" + EntryInfo["creationHour"];
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateEntry @EntryID, @LastUpdate, @UpdateHour, @Title, @_Description, @_Entry, @CareerName, @CourseCode, @SubjectName";
+                updateRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                updateRequest.Parameters.Add("@LastUpdate", SqlDbType.Date).Value = EntryInfo["lastUpdate"];
+                updateRequest.Parameters.Add("@UpdateHour", SqlDbType.Time).Value = EntryInfo["updateHour"];
+                updateRequest.Parameters.Add("@Title", SqlDbType.VarChar, 100).Value = EntryInfo["title"];
+                updateRequest.Parameters.Add("@_Description", SqlDbType.VarChar, 500).Value = EntryInfo["description"];
+                updateRequest.Parameters.Add("@_Entry", SqlDbType.VarChar, Int32.MaxValue).Value = EntryInfo["entry"];
+                updateRequest.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = EntryInfo["career"];
+                updateRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = EntryInfo["course"];
+                updateRequest.Parameters.Add("@SubjectName", SqlDbType.VarChar, 50).Value = EntryInfo["subject"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+
+
+                return Ok("Actualizado");
+            }
+            catch
+            {
+                return BadRequest("Error al actualizado");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/update/entry/visibility")]
+        public IHttpActionResult userUpdateEntryVisibility([FromBody] JObject EntryInfo)
+        {
+
+            string EntryID = EntryInfo["username"] + "-" + EntryInfo["creationDate"] + "-" + EntryInfo["creationHour"];
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateEntryVisibility @EntryID, @Visibility";
+                updateRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                updateRequest.Parameters.Add("@Visibility", SqlDbType.VarChar, 50).Value = EntryInfo["visibility"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+
+                return Ok("Actualizado");
+            }
+            catch
+            {
+                return BadRequest("Error al actualizado");
+            }
+        }
     }
 }

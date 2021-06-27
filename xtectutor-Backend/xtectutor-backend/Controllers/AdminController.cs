@@ -81,5 +81,211 @@ namespace xtectutor_backend.Controllers
             conn.Close();
             return obj;
         }
+
+        [HttpPost]
+        [Route("api/user/add/career")]
+        public IHttpActionResult AddCareer([FromBody] JObject CareerInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddCareer @CareerName";
+                insertRequest.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = CareerInfo["careerName"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+
+                return Ok("Agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/add/course")]
+        public IHttpActionResult AddCourse([FromBody] JObject CourseInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddCourse @CourseCode, @CourseName, @CareerName";
+                insertRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = CourseInfo["courseCode"];
+                insertRequest.Parameters.Add("@CourseName", SqlDbType.VarChar, 50).Value = CourseInfo["courseName"];
+                insertRequest.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = CourseInfo["careerName"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+
+                return Ok("Agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/add/subject")]
+        public IHttpActionResult AddSubject([FromBody] JObject SubjectInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddSubject @SubjectName, @CourseCode";
+                insertRequest.Parameters.Add("@SubjectName", SqlDbType.VarChar, 50).Value = SubjectInfo["subjectName"];
+                insertRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = SubjectInfo["courseCode"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+
+                return Ok("Agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/delete/career")]
+        public IHttpActionResult DeleteCareer([FromBody] JObject CareerInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand selectRequest = conn.CreateCommand();
+                selectRequest.CommandText = "EXEC sp_getCoursesFromCareer @CareerName";
+                selectRequest.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = CareerInfo["careerName"];
+                selectRequest.ExecuteNonQuery();
+
+
+                SqlDataReader data = selectRequest.ExecuteReader();
+                List<string> courseList = new List<string>();
+                while (data.Read())
+                {
+                    courseList.Add(data.GetValue(0).ToString());
+                }
+                data.Close();
+                conn.Close();
+
+                foreach(var item in courseList)
+                {
+                    conn.Open();
+                    SqlCommand deleteRequest = conn.CreateCommand();
+                    deleteRequest.CommandText = "EXEC sp_deleteSubjectFromCourse @CourseCode";
+                    deleteRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = item;
+                    deleteRequest.ExecuteNonQuery();
+
+                    conn.Close();
+
+                }
+
+                conn.Open();
+                SqlCommand deleteRequestCareer = conn.CreateCommand();
+                deleteRequestCareer.CommandText = "EXEC sp_deleteCareer @CareerName";
+                deleteRequestCareer.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = CareerInfo["careerName"];
+                deleteRequestCareer.ExecuteNonQuery();
+
+                conn.Close();
+
+                return Ok("Eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/delete/course")]
+        public IHttpActionResult DeleteCourse([FromBody] JObject CourseInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_deleteSubjectFromCourse @CourseCode";
+                deleteRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = CourseInfo["courseCode"];
+                deleteRequest.ExecuteNonQuery();
+
+                conn.Close();
+
+                return Ok("Eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/delete/subject")]
+        public IHttpActionResult DeleteSubject([FromBody] JObject SubjectInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand deleteRequestCareer = conn.CreateCommand();
+                deleteRequestCareer.CommandText = "EXEC sp_deleteSubject @SubjectName";
+                deleteRequestCareer.Parameters.Add("@SubjectName", SqlDbType.VarChar, 50).Value = SubjectInfo["subjectName"];
+                deleteRequestCareer.ExecuteNonQuery();
+
+                conn.Close();
+
+                return Ok("Eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/add/admin")]
+        public IHttpActionResult AddAdmin([FromBody] JObject AdminInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddAdmin @Username, @_Password, @AdminName, @Email, @Campus";
+                insertRequest.Parameters.Add("@Username", SqlDbType.VarChar, 10).Value = AdminInfo["username"];
+                insertRequest.Parameters.Add("@_Password", SqlDbType.VarChar, 50).Value = AdminInfo["password"];
+                insertRequest.Parameters.Add("@AdminName", SqlDbType.VarChar, 50).Value = AdminInfo["adminName"];
+                insertRequest.Parameters.Add("@Email", SqlDbType.VarChar, 100).Value = AdminInfo["mail"];
+                insertRequest.Parameters.Add("@Campus", SqlDbType.VarChar, 50).Value = AdminInfo["campus"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+
+                return Ok("Agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/user/delete/admin")]
+        public IHttpActionResult DeleteAdmin([FromBody] JObject AdminInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_deleteAdmin @Username";
+                deleteRequest.Parameters.Add("@Username", SqlDbType.VarChar, 10).Value = AdminInfo["username"];
+                deleteRequest.ExecuteNonQuery();
+                conn.Close();
+
+                return Ok("Eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
     }
 }
