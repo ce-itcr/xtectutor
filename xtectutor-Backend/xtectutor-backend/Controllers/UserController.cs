@@ -18,8 +18,8 @@ namespace xtectutor_backend.Controllers
     public class UserController : ApiController
     {
         //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER05;Initial Catalog=xtectutor;Integrated Security=True";
-        //static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
-        static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
         Models.UserModel userModel = new Models.UserModel();
@@ -111,6 +111,67 @@ namespace xtectutor_backend.Controllers
             data.Close();
             conn.Close();
             return obj;
+        }
+
+        [HttpPost]
+        [Route("api/user/add/entry")]
+        public IHttpActionResult userAddEntry([FromBody] JObject EntryInfo)
+        {
+
+            string EntryID = EntryInfo["username"] + "-" + EntryInfo["creationDate"] + "-" + EntryInfo["creationHour"];
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddEntry @EntryID, @Visibility, @CreationDate, @CreationHour, @LastUpdate, @UpdateHour, @NumberOfViews, @Rating, @Title, @_Description, @_Entry, @CareerName, @CourseCode, @SubjectName";
+                insertRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                insertRequest.Parameters.Add("@Visibility", SqlDbType.VarChar, 50).Value = EntryInfo["visibility"];
+                insertRequest.Parameters.Add("@CreationDate", SqlDbType.Date).Value = EntryInfo["creationDate"];
+                insertRequest.Parameters.Add("@CreationHour", SqlDbType.Time).Value = EntryInfo["creationHour"];
+                insertRequest.Parameters.Add("@LastUpdate", SqlDbType.Date).Value = EntryInfo["lastUpdate"];
+                insertRequest.Parameters.Add("@UpdateHour", SqlDbType.Time).Value = EntryInfo["updateHour"];
+                insertRequest.Parameters.Add("@NumberOfViews", SqlDbType.Int).Value = EntryInfo["views"];
+                insertRequest.Parameters.Add("@Rating", SqlDbType.Float).Value = EntryInfo["rating"];
+                insertRequest.Parameters.Add("@Title", SqlDbType.VarChar, 100).Value = EntryInfo["title"];
+                insertRequest.Parameters.Add("@_Description", SqlDbType.VarChar, 500).Value = EntryInfo["description"];
+                insertRequest.Parameters.Add("@_Entry", SqlDbType.VarChar, Int32.MaxValue).Value = EntryInfo["entry"];
+                insertRequest.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = EntryInfo["career"];
+                insertRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = EntryInfo["course"];
+                insertRequest.Parameters.Add("@SubjectName", SqlDbType.VarChar, 50).Value = EntryInfo["subject"];
+                insertRequest.Parameters.Add("@Username", SqlDbType.VarChar, 10).Value = EntryInfo["username"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+
+                foreach(var coauthor in EntryInfo["coauthors"])
+                {
+                    conn.Open();
+                    insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_AddCoauthor @Coauthor, @EntryID";
+                    insertRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                    insertRequest.Parameters.Add("@Coauthor", SqlDbType.VarChar, 10).Value = coauthor;
+
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
+                foreach (var media in EntryInfo["media"])
+                {
+                    conn.Open();
+                    insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_AddMedia @Media, @EntryID";
+                    insertRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                    insertRequest.Parameters.Add("@Media", SqlDbType.VarChar, Int32.MaxValue).Value = media;
+
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+
+                return Ok("Agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
         }
     }
 }
