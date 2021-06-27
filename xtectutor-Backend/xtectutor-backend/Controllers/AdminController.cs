@@ -50,5 +50,35 @@ namespace xtectutor_backend.Controllers
             conn.Close();
             return obj;
         }
+
+        [HttpPost]
+        [Route("api/admin/get/all/admins")]
+        public JArray getAllAdmins()
+        {
+
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            selectRequest.CommandText = "EXEC sp_GetAllAdminInfo";
+
+            selectRequest.ExecuteNonQuery();
+
+            SqlDataReader data = selectRequest.ExecuteReader();
+            JArray obj = new JArray();
+
+            while (data.Read())
+            {
+                JObject adminUserInfo = new JObject(
+                new JProperty("username", data.GetValue(0).ToString()),
+                new JProperty("password", data.GetValue(1).ToString()),
+                new JProperty("adminName", data.GetValue(2).ToString()),
+                new JProperty("mail", data.GetValue(3).ToString()),
+                new JProperty("campus", data.GetValue(4).ToString())
+                );
+                obj.Add(adminUserInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
     }
 }
