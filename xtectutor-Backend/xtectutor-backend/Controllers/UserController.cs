@@ -90,13 +90,19 @@ namespace xtectutor_backend.Controllers
                     visibilityColor = "non-color";
                 }
 
+                int pos1 = data.GetValue(1).ToString().IndexOf("/") + 1;
+                pos1 += data.GetValue(1).ToString().Substring(pos1).IndexOf("/") + 5;
+
+                int pos2 = data.GetValue(3).ToString().IndexOf("/") + 1;
+                pos2 += data.GetValue(3).ToString().Substring(pos2).IndexOf("/") + 5;
+
                 JObject StudentEntry = new JObject(
                 new JProperty("visibility", data.GetValue(0).ToString()),
                 new JProperty("visibilityType", visibilityType),
                 new JProperty("visibilityColor", visibilityColor),
-                new JProperty("creationDate", data.GetValue(1).ToString()),
+                new JProperty("creationDate", data.GetValue(1).ToString().Substring(0, pos1)),
                 new JProperty("creationHour", data.GetValue(2).ToString()),
-                new JProperty("lastUpdate", data.GetValue(3).ToString()),
+                new JProperty("lastUpdate", data.GetValue(3).ToString().Substring(0, pos2)),
                 new JProperty("updateHour", data.GetValue(4).ToString()),
                 new JProperty("views", data.GetValue(5).ToString()),
                 new JProperty("rating", data.GetValue(6).ToString()),
@@ -106,6 +112,55 @@ namespace xtectutor_backend.Controllers
                 new JProperty("course", data.GetValue(10).ToString()),
                 new JProperty("subject", data.GetValue(11).ToString()),
                 new JProperty("comments", AmountOfComments[data.GetValue(12).ToString()])
+                );
+                obj.Add(StudentEntry);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpPost]
+        [Route("api/user/get/selected/entry")]
+        public JArray getSelectedEntry([FromBody] JObject EntryInfo)
+        {
+            string[] comments = userModel.getEntryElement(conn, EntryInfo, "Comment");
+            string[] media = userModel.getEntryElement(conn, EntryInfo, "Media");
+            string[] coauthor = userModel.getEntryElement(conn, EntryInfo, "Coauthor");
+
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            selectRequest.CommandText = "EXEC sp_GetSelectedEntry @EntryID";
+            selectRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryInfo["EntryID"];
+            selectRequest.ExecuteNonQuery();
+
+            SqlDataReader data = selectRequest.ExecuteReader();
+
+
+            JArray obj = new JArray();
+
+            while (data.Read())
+            {
+
+                int pos1 = data.GetValue(0).ToString().IndexOf("/") + 1;
+                pos1 += data.GetValue(0).ToString().Substring(pos1).IndexOf("/") + 5;
+
+                int pos2 = data.GetValue(2).ToString().IndexOf("/") + 1;
+                pos2 += data.GetValue(2).ToString().Substring(pos2).IndexOf("/") + 5;
+
+                JObject StudentEntry = new JObject(
+                new JProperty("creationDate", data.GetValue(0).ToString().Substring(0, pos1)),
+                new JProperty("creationHour", data.GetValue(1).ToString()),
+                new JProperty("lastUpdate", data.GetValue(2).ToString().Substring(0, pos2)),
+                new JProperty("updateHour", data.GetValue(3).ToString()),
+                new JProperty("title", data.GetValue(4).ToString()),
+                new JProperty("description", data.GetValue(5).ToString()),
+                new JProperty("career", data.GetValue(6).ToString()),
+                new JProperty("course", data.GetValue(7).ToString()),
+                new JProperty("subject", data.GetValue(8).ToString()),
+                new JProperty("comments", comments),
+                new JProperty("media", media),
+                new JProperty("coauthor", coauthor)
                 );
                 obj.Add(StudentEntry);
             }

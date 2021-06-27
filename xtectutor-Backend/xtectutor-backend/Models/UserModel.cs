@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Data;
+using System.Collections.Generic;
 
 namespace xtectutor_backend.Models
 {
@@ -28,6 +29,28 @@ namespace xtectutor_backend.Models
             data.Close();
             conn.Close();
             return obj;
+        }
+
+        public string[] getEntryElement(SqlConnection conn, JObject EntryInfo, string element)
+        {
+
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            selectRequest.CommandText = "EXEC sp_GetSelectedEntry" + element + " @EntryID";
+            selectRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryInfo["EntryID"];
+            selectRequest.ExecuteNonQuery();
+
+            SqlDataReader data = selectRequest.ExecuteReader();
+
+
+            List<string> elementList = new List<string>();
+
+            while (data.Read())
+            {
+                elementList.Add(data.GetValue(0).ToString());
+            }
+            conn.Close();
+            return elementList.ToArray();
         }
     }
 }
