@@ -17,8 +17,9 @@ namespace xtectutor_backend.Controllers
     public class AdminController : ApiController
     {
         //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER05;Initial Catalog=xtectutor;Integrated Security=True";
-        static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
-        //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
         [HttpPost]
@@ -82,6 +83,87 @@ namespace xtectutor_backend.Controllers
             return obj;
         }
 
+        [HttpGet]
+        [Route("api/admin/get/all/careers")]
+        public JArray getAllCareers()
+        {
+
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            selectRequest.CommandText = "EXEC sp_GetAllCareers";
+
+            selectRequest.ExecuteNonQuery();
+
+            SqlDataReader data = selectRequest.ExecuteReader();
+            JArray obj = new JArray();
+
+            while (data.Read())
+            {
+                JObject adminUserInfo = new JObject(
+                new JProperty("careerName", data.GetValue(0).ToString())
+                );
+                obj.Add(adminUserInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpGet]
+        [Route("api/admin/get/all/courses")]
+        public JArray getAllCourses()
+        {
+
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            selectRequest.CommandText = "EXEC sp_GetAllCourses";
+
+            selectRequest.ExecuteNonQuery();
+
+            SqlDataReader data = selectRequest.ExecuteReader();
+            JArray obj = new JArray();
+
+            while (data.Read())
+            {
+                JObject adminUserInfo = new JObject(
+                new JProperty("code", data.GetValue(0).ToString()),
+                new JProperty("name", data.GetValue(1).ToString()),
+                new JProperty("associatedCareer", data.GetValue(2).ToString())
+                );
+                obj.Add(adminUserInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpGet]
+        [Route("api/admin/get/all/subjects")]
+        public JArray getAllSubjects()
+        {
+
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            selectRequest.CommandText = "EXEC sp_GetAllSubjects";
+
+            selectRequest.ExecuteNonQuery();
+
+            SqlDataReader data = selectRequest.ExecuteReader();
+            JArray obj = new JArray();
+
+            while (data.Read())
+            {
+                JObject adminUserInfo = new JObject(
+                new JProperty("subjectName", data.GetValue(0).ToString()),
+                new JProperty("associatedCourse", data.GetValue(1).ToString())
+                );
+                obj.Add(adminUserInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
         [HttpPost]
         [Route("api/user/add/career")]
         public IHttpActionResult AddCareer([FromBody] JObject CareerInfo)
@@ -112,9 +194,9 @@ namespace xtectutor_backend.Controllers
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
                 insertRequest.CommandText = "EXEC sp_AddCourse @CourseCode, @CourseName, @CareerName";
-                insertRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = CourseInfo["courseCode"];
-                insertRequest.Parameters.Add("@CourseName", SqlDbType.VarChar, 50).Value = CourseInfo["courseName"];
-                insertRequest.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = CourseInfo["careerName"];
+                insertRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = CourseInfo["code"];
+                insertRequest.Parameters.Add("@CourseName", SqlDbType.VarChar, 50).Value = CourseInfo["name"];
+                insertRequest.Parameters.Add("@CareerName", SqlDbType.VarChar, 50).Value = CourseInfo["associatedCareer"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
 
@@ -136,7 +218,7 @@ namespace xtectutor_backend.Controllers
                 SqlCommand insertRequest = conn.CreateCommand();
                 insertRequest.CommandText = "EXEC sp_AddSubject @SubjectName, @CourseCode";
                 insertRequest.Parameters.Add("@SubjectName", SqlDbType.VarChar, 50).Value = SubjectInfo["subjectName"];
-                insertRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = SubjectInfo["courseCode"];
+                insertRequest.Parameters.Add("@CourseCode", SqlDbType.VarChar, 50).Value = SubjectInfo["associatedCourse"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
 
