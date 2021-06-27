@@ -124,7 +124,7 @@ namespace xtectutor_backend.Controllers
             {
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddEntry @EntryID, @Visibility, @CreationDate, @CreationHour, @LastUpdate, @UpdateHour, @NumberOfViews, @Rating, @Title, @_Description, @_Entry, @CareerName, @CourseCode, @SubjectName";
+                insertRequest.CommandText = "EXEC sp_AddEntry @EntryID, @Visibility, @CreationDate, @CreationHour, @LastUpdate, @UpdateHour, @NumberOfViews, @Rating, @Title, @_Description, @_Entry, @CareerName, @CourseCode, @SubjectName, @Username";
                 insertRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
                 insertRequest.Parameters.Add("@Visibility", SqlDbType.VarChar, 50).Value = EntryInfo["visibility"];
                 insertRequest.Parameters.Add("@CreationDate", SqlDbType.Date).Value = EntryInfo["creationDate"];
@@ -160,7 +160,7 @@ namespace xtectutor_backend.Controllers
                     insertRequest = conn.CreateCommand();
                     insertRequest.CommandText = "EXEC sp_AddMedia @Media, @EntryID";
                     insertRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
-                    insertRequest.Parameters.Add("@Media", SqlDbType.VarChar, Int32.MaxValue).Value = media;
+                    insertRequest.Parameters.Add("@Media", SqlDbType.VarChar, 100).Value = media;
 
                     insertRequest.ExecuteNonQuery();
                     conn.Close();
