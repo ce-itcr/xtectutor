@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit{
     ngOnInit(){
       if(globalThis.flag == 1){
         globalThis.flag = 0;
-
         this.router.navigateByUrl('/categories')
       }
       this.CS.getAdminsList(false);

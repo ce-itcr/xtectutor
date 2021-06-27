@@ -16,10 +16,10 @@ export class CareersTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<CareersTableItem>;
   dataSource: CareersTableDataSource;
-  careerToRemove;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name','edit'];
+  currentCareer = '';
 
   constructor(private modal:NgbModal, private CS:CommunicationService){}
 
@@ -35,25 +35,18 @@ export class CareersTableComponent implements AfterViewInit, OnInit {
 
   openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
-  setCareerToRemove(career){
-    this.careerToRemove = career;
+  setCarrer(name){
+    this.currentCareer = name;
   }
 
   removeCareer(){
-    this.CS.checkCareerStatus(this.careerToRemove).subscribe(res => {
-      //alert(res)
-      if(res == ""){
-        /*his.CS.removeCourse(this.careerToRemove).subscribe(res => {
-          alert("Curso " + this.careerToRemove + " eliminado exitosamente y sus temas asociados")
-          location.reload();
-        })*/
-        this.CS.removeCareer(this.careerToRemove).subscribe(res => {
-          alert("Carrera " + this.careerToRemove + " eliminado exitosamente y sus respectivos cursos");
-          location.reload()
-        })
-      } else {
-        alert("No se puede eliminar la carrera " + this.careerToRemove + " porque contiene entradas de conocimiento.")
-      }
-    })
+    this.CS.deleteCareer(this.currentCareer).subscribe( res => {
+      alert("Carrera eliminada exitosamente");
+      this.CS.getSubjects(true);
+      this.CS.getCourses(true);
+      this.CS.getCareers(true);
+    }, error => {
+      alert("No se pudo eliminar la carrera");
+    });
   }
 }

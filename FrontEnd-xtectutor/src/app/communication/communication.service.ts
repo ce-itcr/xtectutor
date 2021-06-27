@@ -48,7 +48,7 @@ export class CommunicationService {
 
   createEntry(username, creationDate, creationHour, title, description, entry, coauthors, career, course, subject, media){
     let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb";
-    let body = {"username":username,"visibility":"pública", "visibilityType":"fa fa-eye", "visibilityColor": "btn-primary","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
+    let body = {"username":username,"visibility":"pública","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
                 "views":"0","rating":"0","comments":"0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
                 "subject":subject,"media":media
               };
@@ -108,8 +108,7 @@ export class CommunicationService {
   }
 
   getCareers(key){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/careersdb";
-    return this.http.get<any>(url).subscribe(res => {
+    return this.http.get<any>("api/admin/get/all/careers").subscribe(res => {
       var data = [];
       var cont = 0;
       while(cont < res.length){
@@ -127,8 +126,7 @@ export class CommunicationService {
   }
 
   getCourses(key){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb";
-    return this.http.get<any>(url).subscribe(res => {
+    return this.http.get<any>("api/admin/get/all/courses").subscribe(res => {
       var data = [];
       var cont = 0;
       while(cont < res.length){
@@ -146,8 +144,7 @@ export class CommunicationService {
   }
 
   getSubjects(key){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb";
-    return this.http.get<any>(url).subscribe(res => {
+    return this.http.get<any>("api/admin/get/all/subjects").subscribe(res => {
       var data = [];
       var cont = 0;
       while(cont < res.length){
@@ -165,21 +162,27 @@ export class CommunicationService {
   }
 
   createCareer(careerName){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/careersdb";
-    let body = {"careerName":careerName};
-    return this.http.post(url, body);
+    return this.http.post<any[]>("api/user/add/career",
+    {
+      "careerName":careerName,
+    });
   }
 
   createCourse(courseName,courseCode,associatedCareer){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb";
-    let body = {"category":"course","name":courseName,"code":courseCode,"associatedCareer":associatedCareer};
-    return this.http.post(url, body);
+    return this.http.post<any[]>("api/user/add/course",
+    {
+      "name":courseName,
+      "code":courseCode,
+      "associatedCareer":associatedCareer
+    });
   }
 
   createSubject(subjectName,associatedCourse){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb";
-    let body = {"category":"subject","subjectName":subjectName,"associatedCourse":associatedCourse};
-    return this.http.post(url, body);
+    return this.http.post<any[]>("api/user/add/subject",
+    {
+      "subjectName":subjectName,
+      "associatedCourse":associatedCourse
+    });
   }
 
   uploadUsersData(data){
@@ -205,50 +208,28 @@ export class CommunicationService {
     });
   }
 
-  checkSubjectStatus(subject){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/subject/"+subject;
-    return this.http.get(url);
-  }
-
-  removeSubject(subject){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb/subjectName/"+subject;
-    return this.http.delete(url);
-  }
-
-  checkCourseStatus(course){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/course/"+course;
-    return this.http.get(url);
-  }
-
-  removeCourse(course){
-    this.removeAssociatedCourses(course).subscribe(res => {
-      console.log(res);
+  deleteSubject(subject){
+    alert(subject);
+    return this.http.post<any[]>("api/user/delete/subject",
+    {
+      "subjectName":subject
     });
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb/name/"+course;
-    return this.http.delete(url);
-  }
-  
-  removeAssociatedCourses(course){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/subjectsdb/associatedCourse/"+course;
-    return this.http.delete(url);
   }
 
-  checkCareerStatus(career){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb/career/"+career;
-    return this.http.get(url);
-  }
-
-  removeCareer(career){
-    this.removeAssociatedCareer(career).subscribe(res => {
-      console.log(res);
+  deleteCourse(course){
+    alert(course);
+    return this.http.post<any[]>("api/user/delete/course",
+    {
+      "courseCode":course
     });
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/careersdb/careerName/"+career;
-    return this.http.delete(url);
   }
 
-  removeAssociatedCareer(career){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/coursesdb/associatedCareer/"+career;
-    return this.http.delete(url);
+  deleteCareer(career){
+    alert(career);
+    return this.http.post<any[]>("api/user/delete/career",
+    {
+      "careerName":career
+    });
   }
 
 

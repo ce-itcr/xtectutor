@@ -40,19 +40,21 @@ export class CategoriesComponent implements OnInit{
 
     createCareer(careerName){
         this.CS.createCareer(careerName).subscribe(res => {
+            alert("Carrera creada exitosamente");
             this.CS.getCareers(true); 
         })
     }
     
     createCourse(courseName,courseCode,associatedCareer){
-        //alert(courseName + courseCode +associatedCareer)
         this.CS.createCourse(courseName,courseCode,associatedCareer).subscribe(res => {
+            alert("Curso creado exitosamente");
             this.CS.getCourses(true); 
         })
     }
 
     createSubject(subjectName,associatedCourse){
         this.CS.createSubject(subjectName,associatedCourse).subscribe(res => {
+            alert("Tema creado exitosamente");
             this.CS.getSubjects(true);
         })
     }

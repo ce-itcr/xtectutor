@@ -16,12 +16,12 @@ export class CoursesTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<CoursesTableItem>;
   dataSource: CoursesTableDataSource;
-  courseToRemove;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'code', 'associatedCareer', 'edit'];
 
   constructor(private modal:NgbModal, private CS:CommunicationService){}
+  currentCourse = "";
 
   ngOnInit() {
     this.dataSource = new CoursesTableDataSource();
@@ -35,22 +35,18 @@ export class CoursesTableComponent implements AfterViewInit, OnInit {
 
   openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
-  setCourseToRemove(career){
-    this.courseToRemove = career;
+  setCourse(code){
+    this.currentCourse = code;
   }
 
   removeCourse(){
-    //alert(this.courseToRemove)
-    this.CS.checkCourseStatus(this.courseToRemove).subscribe(res => {
-      if(res = []){
-        this.CS.removeCourse(this.courseToRemove).subscribe(res => {
-          alert("Curso " + this.courseToRemove + " eliminado exitosamente y sus temas asociados")
-          location.reload();
-        })
-      } else {
-        alert("No se puede eliminar el curso " + this.courseToRemove + " porque contiene entradas de conocimiento.")
-      }
-    })
+    this.CS.deleteCourse(this.currentCourse).subscribe( res => {
+      alert("curso eliminado exitosamente");
+      this.CS.getSubjects(true);
+      this.CS.getCourses(true);
+    }, error => {
+      alert("No se pudo eliminar el tema");
+    });
   }
 
 }

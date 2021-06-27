@@ -140,8 +140,8 @@
                 <label>Seleccione el curso asociado (*)</label>
                 <select #associatedCourse name="associatedCourse" class="form-control rounded-pill border-0 shadow-sm px-4">
                     <option selected>Seleccionar</option>
-                    <option *ngFor="let item of coursesData" [value]="item.name">
-                      {{item.name}}
+                    <option *ngFor="let item of coursesData" [value]="item.code">
+                      {{item.code}}
                     </option>
                 </select>
             </div>

@@ -16,10 +16,10 @@ export class SubjectsTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<SubjectsTableItem>;
   dataSource: SubjectsTableDataSource;
-  subjectToRemove;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['subjectName', 'associatedCourse','edit'];
+  currentSubject = '';
 
   constructor(private modal:NgbModal, private CS:CommunicationService){}
 
@@ -35,20 +35,17 @@ export class SubjectsTableComponent implements AfterViewInit, OnInit {
 
   openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
-  setSubjectToRemove(subject){
-    this.subjectToRemove = subject;
+  setSubject(name)
+  {
+    this.currentSubject = name;
   }
 
   removeSubject(){
-    this.CS.checkSubjectStatus(this.subjectToRemove).subscribe(res => {
-      if(res == ""){
-        this.CS.removeSubject(this.subjectToRemove).subscribe(res => {
-          alert("Tema " + this.subjectToRemove + " eliminado exitosamente")
-          location.reload();
-        })
-      } else{
-        alert("No se puede eliminar el tema " + this.subjectToRemove + " porque contiene entradas de conocimiento.")
-      }
-    })
+    this.CS.deleteSubject(this.currentSubject).subscribe( res => {
+      alert("Tema eliminado exitosamente");
+      this.CS.getSubjects(true);
+    }, error => {
+      alert("No se pudo eliminar el tema");
+    });
   }
 }
