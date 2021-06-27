@@ -8,10 +8,13 @@ import { Router } from '@angular/router';
 export class CommunicationService {
 
   constructor(private http: HttpClient, private router: Router) { }
-
+  
   getStudentData(username){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/username/"+username;
-    return this.http.get(url);
+    return this.http.post<JSON>("api/user/get/info",
+    {
+      "username":username
+    } 
+    );
   }
 
   getStudentEntries(username, key){
@@ -58,8 +61,11 @@ export class CommunicationService {
   }
 
   getAdminData(username){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb/username/"+username;
-    return this.http.get(url);
+    return this.http.post<JSON>("api/admin/get/info",
+    {
+      "username":username
+    } 
+    );
   }
 
   updateAdminPassword(username, password){
@@ -69,8 +75,7 @@ export class CommunicationService {
   }
 
   getAdminsList(key){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb";
-    return this.http.get<any>(url).subscribe(res => {
+    return this.http.get<any[]>("api/admin/get/all/admins").subscribe( res => {
       var data = [];
       var cont = 0;
       while(cont < res.length){
@@ -84,7 +89,7 @@ export class CommunicationService {
       }
     }, error => {
       alert("Error al obtener lista de administradores")
-    })
+    });
   }
 
   createAdmin(username,password,adminName,mail, campus){
