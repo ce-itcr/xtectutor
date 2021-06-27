@@ -51,7 +51,7 @@ namespace xtectutor_backend.Controllers
             return obj;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/admin/get/all/admins")]
         public JArray getAllAdmins()
         {
