@@ -296,7 +296,7 @@ export class NavbarComponent implements OnInit{
         this.setCreationDate();   
 
         this.CS.createEntry(this.currentUsername, this.creationDate, this.creationHour, title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe(res => {
-          console.log(res);
+          this.CS.getStudentEntries(this.currentUsername, true);
         })
       
       }

@@ -14,6 +14,10 @@ export class TermsComponent implements OnInit{
     constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService, private router: Router){}
 
     ngOnInit(){
+        if(globalThis.flag == 1){
+            globalThis.flag = 0;
+            this.router.navigateByUrl('/user');
+          }
     }
 
 

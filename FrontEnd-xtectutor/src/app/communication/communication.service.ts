@@ -26,7 +26,7 @@ export class CommunicationService {
       localStorage.setItem("myEntries", JSON.stringify(data));
       if(key){
         globalThis.flag = 1;
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("/terms");
       }
     }, error => {
       alert("Error al obtener entradas de estudiante")
@@ -41,7 +41,7 @@ export class CommunicationService {
 
   createEntry(username, creationDate, creationHour, title, description, entry, coauthors, career, course, subject, media){
     let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb";
-    let body = {"username":username,"visibility":"public","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
+    let body = {"username":username,"visibility":"pública", "visibilityType":"fa fa-eye", "visibilityColor": "btn-primary","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
                 "views":"0","rating":"0","comments":"0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
                 "subject":subject,"media":media
               };

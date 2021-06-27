@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit{
 
     ngOnInit(){
       if(globalThis.flag == 1){
-        alert('HUlahula')
         globalThis.flag = 0;
         this.router.navigateByUrl('/user');
       }
