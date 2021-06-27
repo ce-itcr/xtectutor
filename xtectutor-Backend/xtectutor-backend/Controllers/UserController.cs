@@ -18,9 +18,9 @@ namespace xtectutor_backend.Controllers
     public class UserController : ApiController
     {
         //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER05;Initial Catalog=xtectutor;Integrated Security=True";
-        //static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
-        static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
         Models.UserModel userModel = new Models.UserModel();
@@ -197,6 +197,43 @@ namespace xtectutor_backend.Controllers
                 updateRequest.Parameters.Add("@SubjectName", SqlDbType.VarChar, 50).Value = EntryInfo["subject"];
                 updateRequest.ExecuteNonQuery();
                 conn.Close();
+
+                conn.Open();
+                updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_DeleteCoauthor @EntryID";
+                updateRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+
+                conn.Open();
+                updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_DeleteMedia @EntryID";
+                updateRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+
+
+                foreach (var coauthor in EntryInfo["coauthors"])
+                {
+                    conn.Open();
+                    updateRequest = conn.CreateCommand();
+                    updateRequest.CommandText = "EXEC sp_AddCoauthor @Coauthor, @EntryID";
+                    updateRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                    updateRequest.Parameters.Add("@Coauthor", SqlDbType.VarChar, 10).Value = coauthor;
+                    updateRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+                foreach (var media in EntryInfo["media"])
+                {
+                    conn.Open();
+                    updateRequest = conn.CreateCommand();
+                    updateRequest.CommandText = "EXEC sp_AddMedia @Media, @EntryID";
+                    updateRequest.Parameters.Add("@EntryID", SqlDbType.VarChar, 50).Value = EntryID;
+                    updateRequest.Parameters.Add("@Media", SqlDbType.VarChar, 100).Value = media;
+                    updateRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
 
 
                 return Ok("Actualizado");
