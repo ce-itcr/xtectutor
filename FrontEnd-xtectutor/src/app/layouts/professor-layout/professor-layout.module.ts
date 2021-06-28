@@ -12,6 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { SearchComponent } from 'app/pages/professor-pages/search/search.component';
 import { ProfesorProfileComponent } from 'app/pages/professor-pages/profesor-profile/profesor-profile.component';
+import { ProfessorEntriesTableComponent } from 'app/data-tables/professor-entries-table/professor-entries-table.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ProfesorProfileComponent } from 'app/pages/professor-pages/profesor-pro
   ],
   declarations: [
     SearchComponent,
-    ProfesorProfileComponent
+    ProfesorProfileComponent,
+    ProfessorEntriesTableComponent
   ]
 })
 

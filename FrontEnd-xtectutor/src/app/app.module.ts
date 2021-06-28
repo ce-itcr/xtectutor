@@ -22,7 +22,7 @@ import { ProfessorLayoutComponent } from "./layouts/professor-layout/professor-l
     AppComponent,
     StudentLayoutComponent,
     AdminLayoutComponent,
-    ProfessorLayoutComponent
+    ProfessorLayoutComponent,
   ],
   imports: [
     BrowserAnimationsModule,

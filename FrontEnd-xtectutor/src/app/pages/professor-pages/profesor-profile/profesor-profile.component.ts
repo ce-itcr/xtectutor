@@ -21,6 +21,8 @@ export class ProfesorProfileComponent implements OnInit{
         this.getProfessorData();
     }
 
+    openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
+
     getProfessorData(){
         this.CS.getStudentData(this.currentUsername).subscribe(res => {
           this.userData = res;
