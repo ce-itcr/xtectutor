@@ -5,42 +5,38 @@ import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
-export interface MyInputsItem {
-  name: string;
-  id: number;
+export interface ProfessorEntriesTableItem {
+  subject: string;
+  course: string;
+  career: string;
+  title: string;
+  description: string;
+  //author: string;
+  creationDate: string;
+  creationHour: string;
+  lastUpdate: string;
+  updateHour: string;
+  views: number;
+  value: number;
+  comments: number;
 }
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: MyInputsItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'},
-  {id: 11, name: 'Sodium'},
-  {id: 12, name: 'Magnesium'},
-  {id: 13, name: 'Aluminum'},
-  {id: 14, name: 'Silicon'},
-  {id: 15, name: 'Phosphorus'},
-  {id: 16, name: 'Sulfur'},
-  {id: 17, name: 'Chlorine'},
-  {id: 18, name: 'Argon'},
-  {id: 19, name: 'Potassium'},
-  {id: 20, name: 'Calcium'},
+const EXAMPLE_DATA: ProfessorEntriesTableItem[] = [
+  {subject: 'Ley de Tensiones de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Tensiones de Kirchhoff', description: 'Breve introducción a la Ley de Tensiones de Kirchhoff',
+  creationDate: '10/06/2021', creationHour: '12:00:00', lastUpdate: '17/06/2021', updateHour: '13:00:00', views: 13, value: 4.5, comments: 3},
+  {subject: 'Ley de Corrientes de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Corrientes de Kirchhoff', description: 'Breve introducción a la Ley de Corrientes de Kirchhoff',
+  creationDate: '6/06/2021', creationHour: '14:00:00', lastUpdate: '15/06/2021', updateHour: '8:00:00', views: 20, value: 4, comments: 7},
 ];
 
 /**
- * Data source for the MyInputs view. This class should
+ * Data source for the EntriesTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class MyInputsDataSource extends DataSource<MyInputsItem> {
-  data: MyInputsItem[] = EXAMPLE_DATA;
+export class ProfessorEntriesTableDataSource extends DataSource<ProfessorEntriesTableItem> {
+  localData = localStorage.getItem("studentsEntries");
+  data: ProfessorEntriesTableItem[] = this.localData ? JSON.parse(this.localData) : [];
   paginator: MatPaginator;
   sort: MatSort;
 
@@ -53,7 +49,7 @@ export class MyInputsDataSource extends DataSource<MyInputsItem> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<MyInputsItem[]> {
+  connect(): Observable<ProfessorEntriesTableItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -77,7 +73,7 @@ export class MyInputsDataSource extends DataSource<MyInputsItem> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: MyInputsItem[]) {
+  private getPagedData(data: ProfessorEntriesTableItem[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -86,7 +82,7 @@ export class MyInputsDataSource extends DataSource<MyInputsItem> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: MyInputsItem[]) {
+  private getSortedData(data: ProfessorEntriesTableItem[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -94,8 +90,8 @@ export class MyInputsDataSource extends DataSource<MyInputsItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'name': return compare(a.course, b.course, isAsc);
+        case 'id': return compare(+a.subject, +b.subject, isAsc);
         default: return 0;
       }
     });

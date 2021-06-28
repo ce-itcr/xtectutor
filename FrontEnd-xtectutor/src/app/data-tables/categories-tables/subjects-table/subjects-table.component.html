@@ -1,0 +1,54 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="subjectName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Nombre del tema</b></th>
+      <td mat-cell *matCellDef="let row">{{row.subjectName}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="associatedCourse">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Curso(s) asociado(s)</b></th>
+      <td mat-cell *matCellDef="let row">{{row.associatedCourse}}</td>
+    </ng-container>
+
+    <!-- Remove Subject -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef><p class="text-primary"></p></th>
+      <td mat-cell *matCellDef="let row"> 
+        
+        <button class="btn btn-block btn-primary btn-round btn-icon" (click)="openModal(remove_subject)"  (click)="setSubject(row.subjectName)"><i class="fa fa-trash "></i></button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataSource?.data.length"
+      [pageIndex]="0"
+      [pageSize]="50"
+      [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+</div>
+
+<ng-template #remove_subject let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Eliminar Tema</b></h4>
+  </div>
+  <div class="modal-body">
+   
+    <div class="row">
+      <div class="col-md-12">
+        <label>Está Seguro que desea eliminar el tema con el nombre: <b>{{subjectToRemove}}</b></label>
+      </div>
+    </div>
+        
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="removeSubject()" (click)="modal.close()" >Eliminar tema</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>

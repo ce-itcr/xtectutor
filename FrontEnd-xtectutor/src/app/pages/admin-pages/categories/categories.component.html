@@ -1,0 +1,157 @@
+<div class="row">
+    <div class="col-md-8">
+        <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm" style="width: 350px;" (click)="openModal(select_category)">Crear nueva categoría</button>
+    </div>
+    <div class="col-md-12" style="margin-top: 43px;">
+        <div class="card">
+            <div class="modal-header">
+              <div class="col-md-10">
+                <h3 class="card-title text-primary">Categorías disponibles</h3>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute;right: 0px;" (click)="updateCategoriesList()">
+                  <i class="fa fa-refresh "></i>
+                </button>
+              </div>
+                
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <h6><b>Carreras:</b></h6>
+                    <careers-table></careers-table>
+                </div>
+                <div class="" style="margin-top:20px;">
+                    <h6><b>Cursos:</b></h6>
+                    <courses-table></courses-table>
+                </div>
+                <div class="" style="margin-top:20px;">
+                    <h6><b>Temas:</b></h6>
+                    <subjects-table></subjects-table>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        
+      </div>
+</div>
+
+<ng-template #select_category let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Seleccione la Categoría</b></h4>
+    </div>
+    <div class="modal-body">
+       <form>
+        <div class="row">
+            <div class="col-md-12">
+              <label><b>Seleccione la Categoría (*)</b></label>
+              <div>
+                <input type="radio" id="create_career" name="category" value="create_career" checked (click)="openModal(create_career)" (click)="modal.close()">
+                <label for="create_career">Carrera</label>
+              </div>
+              
+              <div>
+                <input type="radio" id="create_course" name="category" value="create_course" (click)="setCareers()" (click)="openModal(create_course)" (click)="modal.close()">
+                <label for="create_course">Curso</label>
+              </div>
+              
+              <div>
+                <input type="radio" id="create_subject" name="category" value="create_subject" (click)="setCourses()" (click)="openModal(create_subject)" (click)="modal.close()">
+                <label for="create_subject">Tema</label>
+              </div>
+            </div>
+          </div> 
+          
+          </form>
+          </div>
+      <div class="modal-footer">
+          <!--<button type="button" class="btn btn-success" (click)="setCategoryStatus(category.value)" (click)="modal.close()">Continuar</button>-->
+          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      </div>
+</ng-template>
+
+<ng-template #create_career let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Crear nueva carrera</b></h4>
+    </div>
+    <div class="modal-body">
+       <form>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Digite nombre de carrera (*)</label>
+                <input #career id="career" required type="text" class="form-control" >
+            </div>
+          </div> 
+          
+          </form>
+          </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createCareer(career.value)" (click)="modal.close()" >Crear carrera</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      </div>
+</ng-template>
+
+<ng-template #create_course let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Crear nueva carrera</b></h4>
+    </div>
+    <div class="modal-body">
+       <form>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Digite nombre del curso (*)</label>
+                <input #courseName id="courseName" required type="text" class="form-control" >
+            </div>
+            <div class="col-md-12">
+                <label>Digite código del curso (*)</label>
+                <input #courseCode id="courseCode" required type="text" class="form-control" >
+            </div>
+            <div class="col-md-12">
+                <label>Seleccione la carrera asociada (*)</label>
+                <select #associatedCareer name="associatedCareer" class="form-control rounded-pill border-0 shadow-sm px-4">
+                    <option selected>Seleccionar</option>
+                    <option *ngFor="let item of careersData" [value]="item.careerName">
+                      {{item.careerName}}
+                    </option>
+                </select>
+              
+            </div>
+          </div> 
+          </form>
+          </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createCourse(courseName.value,courseCode.value,associatedCareer.value)" (click)="modal.close()" >Crear curso</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      </div>
+</ng-template>
+
+<ng-template #create_subject let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Crear nuevo tema</b></h4>
+    </div>
+    <div class="modal-body">
+       <form>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Digite nombre del tema (*)</label>
+                <input #subjectName id="subjectName" required type="text" class="form-control" >
+            </div>
+            <div class="col-md-12">
+                <label>Seleccione el curso asociado (*)</label>
+                <select #associatedCourse name="associatedCourse" class="form-control rounded-pill border-0 shadow-sm px-4">
+                    <option selected>Seleccionar</option>
+                    <option *ngFor="let item of coursesData" [value]="item.code">
+                      {{item.code}}
+                    </option>
+                </select>
+            </div>
+          </div> 
+          </form>
+          </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createSubject(subjectName.value, associatedCourse.value)" (click)="modal.close()" >Crear tema</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      </div>
+</ng-template>
+
+

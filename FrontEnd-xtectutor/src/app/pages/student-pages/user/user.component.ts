@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 
 @Component({
     selector: 'user-cmp',
-    moduleId: module.id,
     templateUrl: 'user.component.html'
 })
 
@@ -11,22 +13,62 @@ export class UserComponent implements OnInit{
 
     userData: any;
     currentUsername = localStorage.getItem("currentUsername");
+    currentPassword = localStorage.getItem("currentPassword");
 
-    constructor(private http:HttpClient){}
+    constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService, private router: Router){}
 
     ngOnInit(){
-        this.getStudentsData();
+
+      this.CS.getStudentEntries(this.currentUsername, false);
+      this.getStudentsData();
+
+      if(globalThis.flag == 2){
+        globalThis.flag = 0;
+        this.router.navigateByUrl("/home");
+      }
+
     }
 
+    openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
+
     getStudentsData(){
-        let url = "https://sheet.best/api/sheets/d48efa8c-42d4-4d4e-b2d8-a319c7dd5c2f/username/"+this.currentUsername;
-        return this.http.get(url).subscribe(res => {
-          this.userData = res;
-          console.log(this.userData);
-        });
-      }
-    
-    modifyPassword(){
-      alert("asdasd");
+      this.CS.getStudentData(this.currentUsername).subscribe(res => {
+        this.userData = res;
+      })
+    }   
+    showPassword(inputId){
+      var passwordInput = (<HTMLInputElement>document.getElementById(inputId));
+        if(passwordInput.type == "password"){
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
     }
+
+    updatePassword(currentPassword, newPassword, confirmationPassword){
+      var status = true;
+      if(currentPassword != this.currentPassword){
+        alert("La contraseña actual es incorrecta.");
+        status = false;
+      } else if(newPassword != confirmationPassword){
+        alert("Verifique su nueva contraseña y la confirmación.")
+        status = false;
+      } else if(newPassword.length < 8 ){
+        alert("La contraseña que ingresó es menor a 8");
+        status = false;
+      } else if(status){
+        this.CS.updateStudentPassword(this.currentUsername, newPassword).subscribe(res => {
+          console.log(res);
+        })
+        alert("Contraseña actualizada")
+        localStorage.setItem("currentPassword", newPassword);        
+      }
+    }
+
+    updateEntriesList(){
+      location.reload();
+    }
+
+
+
 }

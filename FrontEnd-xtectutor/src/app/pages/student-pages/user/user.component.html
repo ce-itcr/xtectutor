@@ -67,7 +67,7 @@
 
         <div class="row">
           <div class="col-md-5 pr-1" style="margin-top: 50px; margin-bottom: 43px;">
-            <a (click)="modifyPassword()" class="form-group">Modificar contraseña</a>  
+            <a (click)="openModal(update_password)" class="form-group">Modificar contraseña</a>  
           </div>
         </div>
       </div>
@@ -75,24 +75,215 @@
     </div>
   </div>
 
-  <div class="col-md-12">
-    <div class="card ">
-      <div class="card-header ">
-        <h5 class="card-title">Mis entradas de conocimiento</h5>
-      </div>
-      <div class="card-body ">
-        <my-inputs></my-inputs>
-      </div>
-      <div class="card-footer ">
-        <hr>
-        <div class="stats">
-          <i class="fa fa-history"></i> Actualizado 00:00:00
+
+  <div class="col-md-12" style="margin-top: 43px;">
+    <div class="card">
+        <div class="modal-header">
+            <div class="col-md-8">
+              <h3 class="card-title text-primary">Mis entradas de conocimiento</h3>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute;right: 0px;" (click)="updateEntriesList()">
+                <i class="fa fa-refresh "></i>
+              </button>
+            </div>
         </div>
-      </div>
+        <div class="card-body">
+          <my-entries-table></my-entries-table>
+        </div>
+        <div class="modal-footer">
+        </div>
     </div>
+    
   </div>
 
-
 </div>
-
 </section>
+
+
+<ng-template #close_this let-modal>
+  <div class="modal-header">
+    <img src="../../../../assets/img/xtectutor.png" class="display-4" style="margin-left: auto;margin-right: auto; display: block; width: 60%;">
+
+  </div>
+  <div class="modal-body">
+    <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>¿Seguro que desea salir?</b></h4>
+    xtectutor - Sistema de la Universidad XTEC que permite a los estudiantes compartir conocimiento de una manera eficiente.
+</div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #update_password let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>Modificar contraseña</b></h4>
+  </div>
+  <div class="modal-body">
+      <form>
+            <div class="row">
+              <div class="col-md-10">
+                <label>Digite su contraseña actual (*)</label>
+                <input #currentPassword id="currentPassword" required type="password" class="form-control" >
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('currentPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <label>Digite la nueva contraseña (*)</label>
+                <input #newPassword id="newPassword" required type="password" class="form-control" >
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('newPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <label>Vuelva a digitar la nueva contraseña (*)</label>
+                <input #confirmationPassword id="confirmationPassword" required type="password" class="form-control" >
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary btn-round btn-icon" style="position:absolute; bottom: 0px;" (click)="showPassword('confirmationPassword')">
+                  <i class="fa fa-eye "></i>
+                </button>
+              </div>
+            </div>
+         </form>
+  </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="updatePassword(currentPassword.value, newPassword.value, confirmationPassword.value)" (click)="modal.close()">Actualizar</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+    </div>
+</ng-template>
+
+
+<ng-template #edit_entry let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Editar Entrada de Conocimiento</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label><b>Título (*)</b></label>
+            <input #title required type="text" class="form-control" >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 pr-1">
+          <div class="form-group">
+            <label><b>Descipción (*)</b></label>
+            <textarea #description required type="text" class="form-control" style="height: 200px;" maxlength="650"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 pr-1">
+          <div class="form-group">
+            <label><b>Entrada de Conocimiento (*)</b></label><br>
+            <textarea #entry type="text" required class="form-control" rows="20" cols="155" maxlength="4000"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label><b>Añadir coautores</b></label>
+        </div>
+        <div class="col-md-2 pr-1">
+          <button type="button" class="btn btn-block btn-primary btn-round btn-icon" (click)="generateCoauthorsInputs()"><i class="fa fa-plus "></i></button>
+        </div>
+
+        <div class="col-md-5 pr-1">
+          <div class="form-group showInputField" >
+            <!--<input #coauthors type="number" class="form-control" >-->
+            <!--<div class="showInputField"></div>-->
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label><b>Categoría (*)</b></label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <label for="career" style="margin-right: 20px;">Carrera: </label>
+          <select #career name="career" (change)="setCourses(career.value, course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option selected>Seleccionar</option>
+            <option *ngFor="let item of careers" [value]="item">
+              {{item}}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <label for="course" style="margin-right: 20px;">Curso: </label>
+          <select #course name="course" (change)="setSubjects(course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option selected>Seleccionar</option>
+            <option *ngFor="let item of courses" [value]="item">
+              {{item}}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <label for="subject" style="margin-right: 20px;">Tema: </label>
+          <select #subject name="subject" id="subject" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option selected>Seleccionar</option>
+            <option *ngFor="let item of subjects" [value]="item">
+              {{item}}
+            </option>
+          </select>
+        </div>
+      </div>
+          
+
+      <hr>
+
+      <div class="row">
+        <div class="col-md-12">
+          <label><b>Añadir links a imágenes </b></label>
+        </div>
+        <div class="col-md-2 pr-1">
+          <button type="button" class="btn btn-block btn-primary btn-round btn-icon" (click)="generateMediaInputs()"><i class="fa fa-plus "></i></button>
+        </div>
+
+        <div class="col-md-5 pr-1">
+          <div class="form-group showMediaInputField" >
+            <!--<input #coauthors type="number" class="form-control" >-->
+            <!--<div class="showInputField"></div>-->
+          </div>
+        </div>
+
+      </div>
+      
+      <hr>
+
+      <div class="row">
+        <div class="col-md-5 pr-1">
+          <div class="form-group">
+            <label style="color: slategrey;"><b>Identificador de usuario: </b> {{ currentUsername }}</label>
+            <label style="color: slategrey;"><b>Fecha de creación: </b> {{ creationDate }}</label>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="createEntry(title.value, description.value, entry.value, career.value, course.value, subject.value)" (click)="modal.close()">Crear</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>

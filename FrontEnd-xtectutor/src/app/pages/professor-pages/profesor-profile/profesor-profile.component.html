@@ -1,0 +1,90 @@
+<section *ngIf="userData">
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-user">
+          <div class="image">
+            <img src="assets/img/damir-bosnjak.jpg" alt="...">
+          </div>
+          <div *ngFor="let item of userData">
+    
+          <div class="card-body">
+            <div class="author">
+              <a href="#">
+                <img class="avatar border-gray" src="assets/img/default-avatar.png" alt="...">
+                <h5 class="title">{{ item.fullName }}</h5>
+              </a>
+              <p class="description">
+                
+              </p>
+            </div>
+            <p class="description text-center">
+              {{ item.username }}
+            </p>
+          
+          <div class="card-footer">
+            <div>
+              <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm"  (click)="openModal(close_this)">Cerrar Sesión</button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="col-md-8">
+        <div class="card card-user">
+          <div class="card-header">
+            <h5 class="card-title">Información de Usuario</h5>
+          </div>
+          <div *ngFor="let item of userData">
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-5 pr-1">
+                  <div class="form-group">
+                    <label>Correo Institucional</label>
+                    <input type="text" class="form-control" disabled="" placeholder="email" value="{{ item.mail }}">
+                  </div>
+                </div>
+                <div class="col-md-5 pr-1">
+                  <div class="form-group">
+                    <label>Indentificador de Usuario</label>
+                    <input type="text" class="form-control" disabled="" placeholder="email" value="{{ item.username }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5 pr-1">
+                  <div class="form-group">
+                    <label>Sede</label>
+                    <input type="text" class="form-control" disabled="" placeholder="campus" value="{{ item.campus }}">
+                  </div>
+                </div>
+              </div>
+             
+            </form>
+    
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</section>
+    
+    
+<ng-template #close_this let-modal>
+    <div class="modal-header">
+      <img src="../../../../assets/img/xtectutor.png" class="display-4" style="margin-left: auto;margin-right: auto; display: block; width: 60%;">
+  
+    </div>
+    <div class="modal-body">
+      <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>¿Seguro que desea salir?</b></h4>
+      xtectutor - Sistema de la Universidad XTEC que permite a los estudiantes compartir conocimiento de una manera eficiente.
+  </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close()">No</button>
+    </div>
+  </ng-template>

@@ -12,8 +12,19 @@ import { CommunicationService } from 'app/communication/communication.service';
 })
 
 export class LoginComponent{
-  constructor(private router: Router, private CS:CommunicationService) {
+  constructor(private router: Router, private CS:CommunicationService) {}
 
+  ngOnInit(){
+    localStorage.setItem("studentsEntries", '[]');
+  }
+
+  showPassword(inputId){
+    var passwordInput = (<HTMLInputElement>document.getElementById(inputId));
+      if(passwordInput.type == "password"){
+        passwordInput.type = "text";
+      } else {
+        passwordInput.type = "password";
+      }
   }
 
   //VERIFICA QUE LOS DATOS INGRESADOS PERTENEZCAN A UN USUARIO REGISTRADO
@@ -24,19 +35,28 @@ export class LoginComponent{
     localStorage.setItem("currentPassword", password);
     localStorage.setItem("userType", type);
 
-    if(type == "student"){
-        this.CS.studentLogIn(username, password);
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-        this.router.navigate(['dashboard']));
-    }
-    else if(type == "professor"){
-        alert("Profesor")
-    }
-    else if(type == "admin"){
-        alert("Administrador")
-    }
+    this.CS.verifyUser(username, password, type).subscribe(res => {
+      console.log(res);
+      if(res){
+        if(type == "admin"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['categories']));
+        } else if(type == "student"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['home']));
+        } else if(type == "professor"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['search']));
+        }
+      } else{
+        alert("Usuario o contraseña incorrecta")
+      }
 
 
+      
+    })
   }
+
+
 
 }

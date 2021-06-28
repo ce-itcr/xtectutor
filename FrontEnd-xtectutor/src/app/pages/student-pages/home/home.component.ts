@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 
 
 @Component({
@@ -10,200 +12,116 @@ import Chart from 'chart.js';
 
 export class HomeComponent implements OnInit{
 
-  public canvas : any;
-  public ctx;
-  public chartColor;
-  public chartEmail;
-  public chartHours;
+    careers = [];
+    courses = [];
+    subjects = [];
+    currentCareer = '';
+    currentCourse = '';
+    currentSubject = '';
+
+    currentUsername = localStorage.getItem("currentUsername");
+    currentPassword = localStorage.getItem("currentPassword");
+
+    constructor(private router: Router, private CS: CommunicationService, private modal:NgbModal){}
 
     ngOnInit(){
-      this.chartColor = "#FFFFFF";
+      if(globalThis.flag == 1){
+        globalThis.flag = 0;
+        this.router.navigateByUrl('/user');
+      }
 
-      this.canvas = document.getElementById("chartHours");
-      this.ctx = this.canvas.getContext("2d");
-
-      this.chartHours = new Chart(this.ctx, {
-        type: 'line',
-
-        data: {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-          datasets: [{
-              borderColor: "#6bd098",
-              backgroundColor: "#6bd098",
-              pointRadius: 0,
-              pointHoverRadius: 0,
-              borderWidth: 3,
-              data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
-            },
-            {
-              borderColor: "#f17e5d",
-              backgroundColor: "#f17e5d",
-              pointRadius: 0,
-              pointHoverRadius: 0,
-              borderWidth: 3,
-              data: [320, 340, 365, 360, 370, 385, 390, 384, 408, 420]
-            },
-            {
-              borderColor: "#fcc468",
-              backgroundColor: "#fcc468",
-              pointRadius: 0,
-              pointHoverRadius: 0,
-              borderWidth: 3,
-              data: [370, 394, 415, 409, 425, 445, 460, 450, 478, 484]
-            }
-          ]
-        },
-        options: {
-          legend: {
-            display: false
-          },
-
-          tooltips: {
-            enabled: false
-          },
-
-          scales: {
-            yAxes: [{
-
-              ticks: {
-                fontColor: "#9f9f9f",
-                beginAtZero: false,
-                maxTicksLimit: 5,
-                //padding: 20
-              },
-              gridLines: {
-                drawBorder: false,
-                zeroLineColor: "#ccc",
-                color: 'rgba(255,255,255,0.05)'
-              }
-
-            }],
-
-            xAxes: [{
-              barPercentage: 1.6,
-              gridLines: {
-                drawBorder: false,
-                color: 'rgba(255,255,255,0.1)',
-                zeroLineColor: "transparent",
-                display: false,
-              },
-              ticks: {
-                padding: 20,
-                fontColor: "#9f9f9f"
-              }
-            }]
-          },
-        }
-      });
-
-
-      this.canvas = document.getElementById("chartEmail");
-      this.ctx = this.canvas.getContext("2d");
-      this.chartEmail = new Chart(this.ctx, {
-        type: 'pie',
-        data: {
-          labels: [1, 2, 3],
-          datasets: [{
-            label: "Emails",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            backgroundColor: [
-              '#e3e3e3',
-              '#4acccd',
-              '#fcc468',
-              '#ef8157'
-            ],
-            borderWidth: 0,
-            data: [342, 480, 530, 120]
-          }]
-        },
-
-        options: {
-
-          legend: {
-            display: false
-          },
-
-          pieceLabel: {
-            render: 'percentage',
-            fontColor: ['white'],
-            precision: 2
-          },
-
-          tooltips: {
-            enabled: false
-          },
-
-          scales: {
-            yAxes: [{
-
-              ticks: {
-                display: false
-              },
-              gridLines: {
-                drawBorder: false,
-                zeroLineColor: "transparent",
-                color: 'rgba(255,255,255,0.05)'
-              }
-
-            }],
-
-            xAxes: [{
-              barPercentage: 1.6,
-              gridLines: {
-                drawBorder: false,
-                color: 'rgba(255,255,255,0.1)',
-                zeroLineColor: "transparent"
-              },
-              ticks: {
-                display: false,
-              }
-            }]
-          },
-        }
-      });
-
-      var speedCanvas = document.getElementById("speedChart");
-
-      var dataFirst = {
-        data: [0, 19, 15, 20, 30, 40, 40, 50, 25, 30, 50, 70],
-        fill: false,
-        borderColor: '#fbc658',
-        backgroundColor: 'transparent',
-        pointBorderColor: '#fbc658',
-        pointRadius: 4,
-        pointHoverRadius: 4,
-        pointBorderWidth: 8,
-      };
-
-      var dataSecond = {
-        data: [0, 5, 10, 12, 20, 27, 30, 34, 42, 45, 55, 63],
-        fill: false,
-        borderColor: '#51CACF',
-        backgroundColor: 'transparent',
-        pointBorderColor: '#51CACF',
-        pointRadius: 4,
-        pointHoverRadius: 4,
-        pointBorderWidth: 8
-      };
-
-      var speedData = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [dataFirst, dataSecond]
-      };
-
-      var chartOptions = {
-        legend: {
-          display: false,
-          position: 'top'
-        }
-      };
-
-      var lineChart = new Chart(speedCanvas, {
-        type: 'line',
-        hover: false,
-        data: speedData,
-        options: chartOptions
-      });
+      this.generateCareers()
     }
+
+    generateCareers(){
+      this.careers = [];
+      var localData = localStorage.getItem("careersList");
+      localData = localData ? JSON.parse(localData) : [];
+      var cont = 0;
+      while(cont < localData.length){
+        this.careers.push(localData[cont]["careerName"]);
+        cont++;
+      }
+    }
+
+    generateCourses(){
+      this.courses = [];
+      var localData = localStorage.getItem("coursesList");
+      localData = localData ? JSON.parse(localData) : [];
+      var cont = 0;
+      while(cont < localData.length){
+        if(localData[cont]["associatedCareer"] == this.currentCareer){
+          this.courses.push(localData[cont]["code"]);
+        }
+        cont++;
+      }
+    }
+
+    generateSubjects(){
+      this.subjects = [];
+      var localData = localStorage.getItem("subjectsList");
+      localData = localData ? JSON.parse(localData) : [];
+      var cont = 0;
+      while(cont < localData.length){
+        if(localData[cont]["associatedCourse"] == this.currentCourse){
+          this.subjects.push(localData[cont]["subjectName"]);
+        }
+        cont++;
+      }
+    }
+
+    public setCourses(career){
+      if(career == 'Seleccionar'){
+        this.currentCareer = '';
+        this.currentCourse = '';
+        this.currentSubject = '';
+        this.courses = [];
+        this.subjects = [];
+      }else if(career != this.currentCareer && this.currentCareer != ''){
+        this.currentCareer = career;
+        this.currentCourse = '';
+        this.currentSubject = '';
+        //COMUNICACION
+        this.generateCourses();
+        this.subjects = [];
+      }else{
+        this.currentCareer = career;
+        this.generateCourses();
+        this.subjects = [];
+      }
+    }
+
+    public setSubjects(item){
+      if(item == 'Seleccionar'){
+        this.currentCourse = '';
+        this.currentSubject = '';
+        this.subjects = [];
+      }else if(item != this.currentCourse && this.currentCourse != ''){
+        this.currentCourse = item;
+        this.currentSubject = '';
+        //COMUNICACION
+        this.generateSubjects();
+      }else{
+        this.currentCourse = item;
+        this.generateSubjects();
+      }
+    }
+
+    public setCategory(item){
+      if(item == 'Seleccionar'){
+        this.currentSubject = '';
+      }else{
+        this.currentSubject = item;
+      }
+    }
+
+
+    searchEntries(career, course, subject){
+      if(career != "Seleccionar" && course != "Seleccionar" && subject != "Seleccionar"){
+        this.CS.searchStudentsEntries(this.currentUsername, career, course, subject, true);
+      }else {
+        alert("Debe seleccionar todas las categorías")
+      }
+    }
+
 }

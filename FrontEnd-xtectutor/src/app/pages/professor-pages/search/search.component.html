@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <label for="course" style="margin-right: 20px;">Carrera: </label>
+      <select #career name="career" (change)="setCourses(career.value, course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
+        <option selected>Seleccionar</option>
+        <option *ngFor="let item of careers" [value]="item">
+          {{item}}
+        </option>
+      </select>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <label for="course" style="margin-right: 20px;">Curso: </label>
+      <select #course name="course" (change)="setSubjects(course.value)" class="form-control rounded-pill border-0 shadow-sm px-4">
+        <option selected>Seleccionar</option>
+        <option *ngFor="let item of courses" [value]="item">
+          {{item}}
+        </option>
+      </select>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <label for="course" style="margin-right: 20px;">Tema: </label>
+      <select #theme name="theme" id="theme" class="form-control rounded-pill border-0 shadow-sm px-4">
+        <option selected>Seleccionar</option>
+        <option *ngFor="let item of subjects" [value]="item">
+          {{item}}
+        </option>
+      </select>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" (click) = "searchEntries(career.value, course.value, theme.value)">Buscar</button>
+      </div>
+    </div>
+  </div>
+  
+  <professor-entries-table></professor-entries-table>
+  
+  
