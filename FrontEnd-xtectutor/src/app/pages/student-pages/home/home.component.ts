@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 
 
 @Component({
@@ -17,7 +19,10 @@ export class HomeComponent implements OnInit{
     currentCourse = '';
     currentSubject = '';
 
-    constructor(private router: Router){}
+    currentUsername = localStorage.getItem("currentUsername");
+    currentPassword = localStorage.getItem("currentPassword");
+
+    constructor(private router: Router, private CS: CommunicationService, private modal:NgbModal){}
 
     ngOnInit(){
       if(globalThis.flag == 1){
@@ -46,7 +51,7 @@ export class HomeComponent implements OnInit{
       var cont = 0;
       while(cont < localData.length){
         if(localData[cont]["associatedCareer"] == this.currentCareer){
-          this.courses.push(localData[cont]["name"]);
+          this.courses.push(localData[cont]["code"]);
         }
         cont++;
       }
@@ -107,6 +112,15 @@ export class HomeComponent implements OnInit{
         this.currentSubject = '';
       }else{
         this.currentSubject = item;
+      }
+    }
+
+
+    searchEntries(career, course, subject){
+      if(career != "Seleccionar" && course != "Seleccionar" && subject != "Seleccionar"){
+        this.CS.searchStudentsEntries(this.currentUsername, career, course, subject, true);
+      }else {
+        alert("Debe seleccionar todas las categorías")
       }
     }
 

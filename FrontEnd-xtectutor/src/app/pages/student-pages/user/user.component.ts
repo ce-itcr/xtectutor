@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/communication/communication.service';
 
@@ -14,9 +15,15 @@ export class UserComponent implements OnInit{
     currentUsername = localStorage.getItem("currentUsername");
     currentPassword = localStorage.getItem("currentPassword");
 
-    constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService){}
+    constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService, private router: Router){}
 
     ngOnInit(){
+
+      if(globalThis.flag == 1){
+        this.router.navigateByUrl("/home")
+        globalThis.flag = 0;
+      }
+
       this.CS.getStudentEntries(this.currentUsername, false);
       this.getStudentsData();
 

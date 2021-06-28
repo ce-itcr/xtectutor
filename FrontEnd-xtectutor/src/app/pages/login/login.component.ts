@@ -14,6 +14,10 @@ import { CommunicationService } from 'app/communication/communication.service';
 export class LoginComponent{
   constructor(private router: Router, private CS:CommunicationService) {}
 
+  ngOnInit(){
+    localStorage.setItem("studentsEntries", '[]');
+  }
+
   showPassword(inputId){
     var passwordInput = (<HTMLInputElement>document.getElementById(inputId));
       if(passwordInput.type == "password"){
