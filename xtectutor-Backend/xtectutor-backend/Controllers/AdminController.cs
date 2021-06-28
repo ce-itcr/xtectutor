@@ -16,9 +16,9 @@ namespace xtectutor_backend.Controllers
 
     public class AdminController : ApiController
     {
-        //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER05;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER06;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
-        static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
@@ -51,6 +51,38 @@ namespace xtectutor_backend.Controllers
             data.Close();
             conn.Close();
             return obj;
+        }
+
+        [HttpPost]
+        [Route("api/admin/upload/excel")]
+        public IHttpActionResult uploadExcel([FromBody] JArray excelInfo)
+        {
+            try
+            {
+                conn.Open();
+                Debug.Print("1");
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_deleteExcel";
+                deleteRequest.ExecuteNonQuery();
+                conn.Close();
+
+                foreach (JObject user in excelInfo)
+                {
+                    conn.Open();
+                    SqlCommand uploadRequest = conn.CreateCommand();
+                    uploadRequest.CommandText = "EXEC sp_uploadExcel @Username, @Password, @UserType, @FullName, @Email, @Campus";
+                    uploadRequest.Parameters.Add("@Username", SqlDbType.VarChar, 10).Value = user["username"];
+                    uploadRequest.Parameters.Add("@Password", SqlDbType.VarChar, 50).Value = user["password"];
+                    uploadRequest.Parameters.Add("@UserType", SqlDbType.VarChar, 15).Value = user["userType"];
+                    uploadRequest.Parameters.Add("@FullName", SqlDbType.VarChar, 50).Value = user["fullName"];
+                    uploadRequest.Parameters.Add("@Email", SqlDbType.VarChar, 100).Value = user["mail"];
+                    uploadRequest.Parameters.Add("@Campus", SqlDbType.VarChar, 50).Value = user["campus"];
+                    uploadRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
+                return Ok("Usuarios actualizados");
+            }
+            catch { return Ok("Error al cargar excel"); }
         }
 
         [HttpGet]
