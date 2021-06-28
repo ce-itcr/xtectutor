@@ -35,7 +35,8 @@ const EXAMPLE_DATA: EntriesTableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class EntriesTableDataSource extends DataSource<EntriesTableItem> {
-  data: EntriesTableItem[] = EXAMPLE_DATA;
+  localData = localStorage.getItem("studentsEntries");
+  data: EntriesTableItem[] = this.localData ? JSON.parse(this.localData) : [];
   paginator: MatPaginator;
   sort: MatSort;
 

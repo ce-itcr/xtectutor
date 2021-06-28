@@ -253,4 +253,39 @@ export class CommunicationService {
     });
   }
 
+  searchStudentsEntries(username, career, course, subject, key){
+    return this.http.post<any[]>("api/user/search/entries",
+    {
+      "username":username,
+      "career":career,
+      "course":course,
+      "subject":subject
+    }).subscribe( res => {
+
+      var data = [];
+      var cont = 0;
+      while(cont < res.length){
+        data.push(res[cont]);
+        cont++;
+      }
+      localStorage.setItem("studentsEntries", JSON.stringify(data));
+      if(key){
+        globalThis.flag = 1;
+        this.router.navigateByUrl("/user");
+      }
+    }, error => {
+      alert("Error al obtener")
+    });
+  }
+
+  sendComment(comment, EntryID){
+    alert(comment);
+    alert(EntryID);
+    return this.http.post<any[]>("api/user/add/comment",
+    {
+      "comment":comment,
+      "EntryID": EntryID
+    });
+  }
+
 }
