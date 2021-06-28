@@ -19,8 +19,8 @@ namespace xtectutor_backend.Controllers
     {
         //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER05;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
-        //static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
-        static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
         Models.UserModel userModel = new Models.UserModel();
@@ -385,6 +385,28 @@ namespace xtectutor_backend.Controllers
             data.Close();
             conn.Close();
             return obj;
+        }
+
+        [HttpPost]
+        [Route("api/user/update/password")]
+        public IHttpActionResult updatePassword([FromBody] JObject UserInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateUserPassword @Username, @Password";
+                updateRequest.Parameters.Add("@Username", SqlDbType.VarChar, 50).Value = UserInfo["username"];
+                updateRequest.Parameters.Add("@Password", SqlDbType.VarChar, 50).Value = UserInfo["password"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+
+                return Ok("Actualizado");
+            }
+            catch
+            {
+                return BadRequest("Error al actualizar contrraseña");
+            }
         }
     }
 }
