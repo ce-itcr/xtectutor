@@ -79,7 +79,7 @@
         <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm"  (click)="openModal(create_admin)">Crear Nuevo Administrador</button>
       </div>
       <div class="col-md-8">
-        <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm"  (click)="openModal(upload_data)">Cargar datos de usuario</button>
+        <button class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm"  (click)="openModallg(upload_data)">Cargar datos de usuario</button>
       </div>
     
       <div class="col-md-12" style="margin-top: 43px;">
@@ -229,6 +229,31 @@
     </div>
     <div class="modal-body">
       <input type="file" multiple="false" (change)="onFileChange($event)">
+      
+      <table class="table table-hover" style="margin-top: 10px;">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nombre de Usuario</th>
+                <th scope="col">Contraseña</th>
+                <th scope="col">Tipo de Usuario</th>
+                <th scope="col">Nombre Completo</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Campus</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of data">
+                <td>{{item.username}}</td>
+                <td>{{item.password}}</td>
+                <td>{{item.userType}}</td>
+                <td>{{item.fullName}}</td>
+                <td>{{item.mail}}</td>
+                <td>{{item.campues}}</td>
+                <td>{{item.status}}</td>
+            </tr>
+        </tbody>
+    </table>
     </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-success" (click)="uploadData()" (click)="modal.close()" >Actualizar</button>

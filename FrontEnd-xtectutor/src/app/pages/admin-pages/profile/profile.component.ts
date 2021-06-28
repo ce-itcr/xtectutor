@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit{
     }
 
     openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
+    openModallg(content){ this.modal.open(content,{size:'lg', centered:true});}
 
     getAdminData(){
       this.CS.getAdminData(this.currentUsername).subscribe(res => {
@@ -122,7 +123,7 @@ export class ProfileComponent implements OnInit{
 
     uploadData(){
       this.CS.uploadUsersData(this.usersDB).subscribe(res => {
-        console.log(res);
+        alert(res);
       });
     }
 
