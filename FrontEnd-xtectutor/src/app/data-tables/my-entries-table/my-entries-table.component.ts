@@ -101,6 +101,7 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
       cont++;
     }
     var EntryID = this.currentUsername + "-" + date + "-" + newHour;
+    alert(EntryID)
 
     this.CS.getCoauthors(EntryID).subscribe( res => {
       this.entryElements = res[0];

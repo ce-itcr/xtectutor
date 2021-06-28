@@ -99,14 +99,23 @@ export class ProfessorEntriesTableComponent implements AfterViewInit, OnInit {
       cont ++;
     }
   }
-
+  
   public generateMedia(){
     var cont = 0;
     //this.currentMedia = JSON.parse(this.currentMedia);
-    while(cont < this.currentMedia.length){
+    /*while(cont < this.currentMedia.length){
       var textfield = document.createElement('input');
       textfield.type = "text"; textfield.value = this.currentMedia[cont]; textfield.id = "link"+this.mediaCounter; textfield.disabled = true;
       document.querySelector('.showMediaInputField').appendChild(textfield);
+      this.mediaCounter++;
+      cont ++;
+    }*/
+    while(cont < this.currentMedia.length){
+      var image = document.createElement('img');
+      image.setAttribute("src", this.currentMedia[cont]);
+      image.setAttribute("width", "250");
+      image.setAttribute("heigth", "250");
+      document.querySelector('.showMediaInputField').appendChild(image);
       this.mediaCounter++;
       cont ++;
     }

@@ -39,7 +39,7 @@ export class CommunicationService {
       }
       localStorage.setItem("myEntries", JSON.stringify(data));
       if(key){
-        location.reload();
+        //location.reload();
         globalThis.flag = 1;
         this.router.navigateByUrl("/terms");
       }
@@ -257,7 +257,7 @@ export class CommunicationService {
       }
       localStorage.setItem("studentsEntries", JSON.stringify(data));
       if(key){
-        globalThis.flag = 1;
+        globalThis.flag = 2;
         this.router.navigateByUrl("/user");
       }
     }, error => {

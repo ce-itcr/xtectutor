@@ -22,7 +22,7 @@ export class UserComponent implements OnInit{
       this.CS.getStudentEntries(this.currentUsername, false);
       this.getStudentsData();
 
-      if(globalThis.flag == 1){
+      if(globalThis.flag == 2){
         globalThis.flag = 0;
         this.router.navigateByUrl("/home");
       }
