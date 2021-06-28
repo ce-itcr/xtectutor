@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { post } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,14 @@ import { Router } from '@angular/router';
 export class CommunicationService {
 
   constructor(private http: HttpClient, private router: Router) { }
+
+  public verifyUser(username, password, userType){
+    return this.http.post<JSON>("api/user/login/verify", 
+    { 
+      "username": username, "password": password, "userType": userType
+    });
+  }
+
   
   getStudentData(username){
     return this.http.post<JSON>("api/user/get/info",
@@ -199,26 +208,8 @@ export class CommunicationService {
   }
 
   uploadUsersData(data){
-    this.removeStudents();
-    this.removeProfessors();
-
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb";
-    return this.http.post(url, data);
-
-  }
-
-  removeStudents(){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb/userType/student";
-    return this.http.delete(url).subscribe(res => {
-      console.log(res);
-    });
-  }
-
-  removeProfessors(){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb/userType/professor";
-    return this.http.delete(url).subscribe(res => {
-      console.log(res);
-    });
+    return this.http.post<any[]>("api/admin/upload/excel",
+    data);
   }
 
   deleteSubject(subject){

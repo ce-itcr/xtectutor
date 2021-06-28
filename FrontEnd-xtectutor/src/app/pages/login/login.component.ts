@@ -31,17 +31,23 @@ export class LoginComponent{
     localStorage.setItem("currentPassword", password);
     localStorage.setItem("userType", type);
 
-    if(type == "student"){
-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate(['home']));
-    }
-    else if(type == "professor"){
-        alert("Profesor")
-    }
-    else if(type == "admin"){
-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate(['categories']));
-    }
+    this.CS.verifyUser(username, password, type).subscribe(res => {
+      console.log(res);
+      if(res){
+        if(type == "admin"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['categories']));
+        } else if(type = "student"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['home']));
+        }
+      } else{
+        alert("Usuario o contraseña incorrecta")
+      }
+
+
+      
+    })
   }
 
 
