@@ -187,6 +187,10 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     this.addMedia();
     this.setUpdateDate();
 
+    if(this.creationHour.slice(0,1) == '0'){
+      this.creationHour = this.creationHour.slice(1,9);
+    }
+
     this.CS.editEntry(this.currentUsername, this.creationDate, this.creationHour, this.updateDate, this.updateHour,
       title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe( res => {
         this.CS.getStudentEntries(this.currentUsername, true);
