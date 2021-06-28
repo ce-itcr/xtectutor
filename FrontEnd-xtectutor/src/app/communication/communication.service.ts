@@ -22,11 +22,9 @@ export class CommunicationService {
     {
       "username":username
     }).subscribe(res => {
-      alert(res);
       var data = [];
       var cont = 0;
       while(cont < res.length){
-        alert(res[cont]);
         data.push(res[cont]);
         cont++;
       }
@@ -47,21 +45,30 @@ export class CommunicationService {
   }
 
   createEntry(username, creationDate, creationHour, title, description, entry, coauthors, career, course, subject, media){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb";
+    alert(username + "\n" +
+    creationDate + "\n" +
+    creationHour + "\n" +
+    title + "\n" +
+    description + "\n" +
+    entry + "\n" +
+    coauthors + "\n" +
+    career + "\n" +
+    course + "\n" +
+    subject + "\n" +
+    media);
     let body = {"username":username,"visibility":"pública","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
-                "views":"0","rating":"0","comments":"0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
-                "subject":subject,"media":media
-              };
-    return this.http.post(url, body);
+                "views":"0","rating":"0.0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
+                "subject":subject,"media":media};
+    return this.http.post("api/user/add/entry", body);
   }
 
   editEntry(username, creationDate, creationHour, updateDate, updateHour, title, description, entry, coauthors, career, course, subject, media){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/entriesdb";
-    let body = {"username":username,"visibility":"public","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":updateDate,"updateHour":updateHour,
-                "views":"0","rating":"0","comments":"0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
+    let body = {"username":username,"creationDate":creationDate,"creationHour":creationHour,"lastUpdate":updateDate,"updateHour":updateHour,
+                "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
                 "subject":subject,"media":media
               };
-    return this.http.post(url, body);
+    console.log(JSON.stringify(body));
+    return this.http.post("api/user/update/entry", body);
   }
 
   getAdminData(username){
@@ -97,14 +104,16 @@ export class CommunicationService {
   }
 
   createAdmin(username,password,adminName,mail, campus){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb";
-    let body = {"username":username,"password":password,"userType":"admin","adminName":adminName,"mail":mail,"campus":campus};
-    return this.http.post(url, body);
+    let body = {"username":username,"password":password,"adminName":adminName,"mail":mail,"campus":campus};
+    return this.http.post("api/user/add/admin", body);
   }
 
   removeAdmin(username){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb/username/"+username;
-    return this.http.delete(url);
+    return this.http.post<JSON>("api/user/delete/admin",
+    {
+      "username":username
+    } 
+    );
   }
 
   getCareers(key){
@@ -232,5 +241,21 @@ export class CommunicationService {
     });
   }
 
+  getCoauthors(entryID){
+    return this.http.post<any[]>("api/user/get/selected/entry",
+    {
+      "EntryID":entryID
+    });
+  }
+
+  visibilityChange(username, creationDate, lastUpdate, visibility){
+    return this.http.post<any[]>("api/user/update/entry/visibility",
+    {
+      "username":username,
+      "creationDate":creationDate,
+      "creationHour":lastUpdate,
+      "visibility":visibility
+    });
+  }
 
 }

@@ -16,7 +16,7 @@
     <ng-container matColumnDef="visibility">
       <th mat-header-cell *matHeaderCellDef><p class="text-primary"><b>VISIBILIDAD</b></p></th>
       <td mat-cell *matCellDef="let row"> {{row.visibility}} <button class="btn btn-sm {{row.visibilityColor}} btn-round btn-icon " 
-        (click) = "changeVisibility(row.username, row.creationDate, row.creationHour)"><i class="{{row.visibilityType}} "></i></button> </td>
+        (click) = "changeVisibility(row.creationDate, row.creationHour, row.visibility)"><i class="{{row.visibilityType}} "></i></button> </td>
     </ng-container>
 
     <!-- Creation Date Column -->
@@ -42,8 +42,7 @@
       <th mat-header-cell *matHeaderCellDef><p class="text-primary"></p></th>
       <td mat-cell *matCellDef="let row"> 
         
-        <button class="btn btn-block btn-primary btn-round btn-icon" (click)="openModal(edit_entry, row.title, row.description, row.entry, 
-                                                                              row.coauthors, row.media, row.subject, row.course, row.career, row.creationDate, row.creationHour)"><i class="fa fa-pencil "></i></button>
+        <button class="btn btn-block btn-primary btn-round btn-icon" (click) = "sendEntryID(row.creationDate, row.creationHour, edit_entry)"><i class="fa fa-pencil "></i></button>
         
       </td>
     </ng-container>
@@ -172,6 +171,6 @@
   </div>
   <div class="modal-footer">
       <button type="button" class="btn btn-success" (click)="updateEntry(title.value, description.value, entry.value, career.value, course.value, subject.value)" (click)="modal.close()">Editar</button>
-      <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click) = "refresh()" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>

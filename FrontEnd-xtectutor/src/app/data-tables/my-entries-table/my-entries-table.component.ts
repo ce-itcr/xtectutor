@@ -27,8 +27,9 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     this.dataSource = new MyEntriesTableDataSource();
   }
 
-  currentUsername = localStorage.getItem("currentUsername");
+  entryElements;
 
+  currentUsername = localStorage.getItem("currentUsername");
   currentVisibility = "fa fa-eye"
 
   currentTitle = '';
@@ -59,21 +60,55 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     this.table.dataSource = this.dataSource;
   }
 
-  openModal(content, title, desc, entry, coauthors, media, subject, course, career, creationD, creationH){ 
+  sendEntryID(date, hour, content){
+    var cont = 0;
+    var slash = 0;
+    var day = '';
+    var month = '';
+    var year = '';
+    while(cont < date.length){
+      if(date[cont] == "/"){
+        slash = slash + 1;
+      }else if(slash == 0){
+        day = day + date[cont];
+      }else if(slash == 1){
+        month = month + date[cont];
+      }else{
+        year = year + date[cont]
+      }
+      cont ++;
+    }
+    if(day.length == 1){
+      day = "0" + day
+    }
+    if(month.length == 1){
+      month = "0" + month
+    }
+    date = month + "/" + day + "/" + year;
+    this.creationDate = date;
+    var EntryID = this.currentUsername + "-" + date + "-" + hour;
 
-    this.currentTitle = title;
-    this.currentDesc = desc;
-    this.currentEntry = entry;
+    this.CS.getCoauthors(EntryID).subscribe( res => {
+      this.entryElements = res[0];
+      this.openModal(content);
+    }, error => {
+      alert("Error al obtener los datos")
+    });
+  }
 
-    this.currentCoauthors = coauthors;
-    this.currentMedia = media;
+  openModal(content){ 
+    this.currentTitle = this.entryElements["title"];
+    this.currentDesc = this.entryElements["description"];
+    this.currentEntry = this.entryElements["entry"];
 
-    this.currentSubject = subject;
-    this.currentCourse = course;
-    this.currentCareer = career;
+    this.currentCoauthors = this.entryElements["coauthor"];
+    this.currentMedia = this.entryElements["media"];
 
-    this.creationDate = creationD;
-    this.creationHour = creationH;
+    this.currentSubject = this.entryElements["subject"];
+    this.currentCourse = this.entryElements["course"];
+    this.currentCareer = this.entryElements["career"];
+
+    this.creationHour = this.entryElements["creationHour"];
 
     this.modal.open(content,{size:'xl', centered:true});
     this.generateCoauthors();
@@ -82,7 +117,7 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
 
   public generateCoauthors(){
     var cont = 0;
-    this.currentCoauthors = JSON.parse(this.currentCoauthors);
+    //this.currentCoauthors = JSON.parse(this.currentCoauthors);
     while(cont < this.currentCoauthors.length){
       var textfield = document.createElement('input');
       textfield.type = "number"; textfield.value = this.currentCoauthors[cont]; textfield.id = "coAuthor"+this.coAuthorsCounter;
@@ -94,7 +129,7 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
 
   public generateMedia(){
     var cont = 0;
-    this.currentMedia = JSON.parse(this.currentMedia);
+    //this.currentMedia = JSON.parse(this.currentMedia);
     while(cont < this.currentMedia.length){
       var textfield = document.createElement('input');
       textfield.type = "text"; textfield.value = this.currentMedia[cont]; textfield.id = "link"+this.mediaCounter;
@@ -152,24 +187,59 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
       title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe( res => {
         this.CS.getStudentEntries(this.currentUsername, true);
       }, error => {
-        alert("Error al editar la entrada")
+        alert("Error al editar la entrada");
       });
   
   }
 
   setUpdateDate(){
     var today = new Date();
-    var date = today.getDate() +'/' + (today.getMonth()+1) + '/' + today.getFullYear();
+    var date = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear();
     this.updateDate = date;
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     this.updateHour = time;
 
   }
 
-  changeVisibility(username, creationDate, creationHour){
-    alert(username);
-    alert(creationDate);
-    alert(creationHour);
+  changeVisibility(date, creationHour, visibility){
+    var cont = 0;
+    var slash = 0;
+    var day = '';
+    var month = '';
+    var year = '';
+    while(cont < date.length){
+      if(date[cont] == "/"){
+        slash = slash + 1;
+      }else if(slash == 0){
+        day = day + date[cont];
+      }else if(slash == 1){
+        month = month + date[cont];
+      }else{
+        year = year + date[cont]
+      }
+      cont ++;
+    }
+    if(day.length == 1){
+      day = "0" + day
+    }
+    if(month.length == 1){
+      month = "0" + month
+    }
+    date = month + "/" + day + "/" + year;
+    if(visibility == "pública"){
+      visibility = "privada";
+    }else{
+      visibility = "pública";
+    }
+    this.CS.visibilityChange(this.currentUsername,date,creationHour, visibility).subscribe(res => {
+      this.CS.getStudentEntries(this.currentUsername, true);
+    }, error => {
+      alert("Error al actualizar visibilidad")
+    })
+  }
+
+  refresh(){
+    location.reload();
   }
 
 }

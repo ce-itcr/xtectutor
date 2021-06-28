@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit{
 
     setCreationDate(){
       var today = new Date();
-      var date = today.getDate() +'/' + (today.getMonth()+1) + '/' + today.getFullYear();
+      var date = "0" + (today.getMonth()+1) + '/' + today.getDate() +'/' + today.getFullYear();
       this.creationDate = date;
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       this.creationHour = time;
@@ -81,7 +81,7 @@ export class NavbarComponent implements OnInit{
       var cont = 0;
       while(cont < localData.length){
         if(localData[cont]["associatedCareer"] == this.currentCareer){
-          this.courses.push(localData[cont]["name"]);
+          this.courses.push(localData[cont]["code"]);
         }
         cont++;
       }
@@ -297,6 +297,8 @@ export class NavbarComponent implements OnInit{
 
         this.CS.createEntry(this.currentUsername, this.creationDate, this.creationHour, title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe(res => {
           this.CS.getStudentEntries(this.currentUsername, true);
+        }, error => {
+          alert(error);
         })
       
       }

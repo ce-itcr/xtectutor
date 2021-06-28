@@ -36,8 +36,8 @@ export class AdminsTableComponent implements AfterViewInit, OnInit {
 
   removeAdmin(){
     this.CS.removeAdmin(this.adminToRemove).subscribe(res => {
-      globalThis.flag = 1;
-      this.router.navigateByUrl("/categories");
+      alert("Administrador eliminado exitosamente");
+      this.CS.getAdminsList(true);
     })
   }
 
