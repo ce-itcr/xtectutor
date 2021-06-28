@@ -15,10 +15,10 @@ namespace WebApplication1.Controllers
     [EnableCors(origins: "http://localhost:4200/", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
-        //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER06;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER06;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=MELI\\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
-        static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
         [HttpPost]
@@ -48,6 +48,36 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest("Error al insertar");
             }
+        }
+
+        [HttpPost]
+        [Route("api/user/login/verify")]
+        public bool verifyLogin([FromBody] JObject LoginInfo)
+        {
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            if (LoginInfo["userType"].ToString() == "admin")
+            {
+                selectRequest.CommandText = "EXEC sp_getAdmins";
+            }
+            else
+            {
+                selectRequest.CommandText = "EXEC sp_getUsersByType @UserType";
+                selectRequest.Parameters.Add("@UserType", SqlDbType.VarChar, 15).Value = LoginInfo["userType"];
+            }
+
+            selectRequest.ExecuteNonQuery();
+            SqlDataReader data = selectRequest.ExecuteReader();
+            bool res = false;
+            while (data.Read())
+            {
+                if (data.GetValue(0).ToString() == LoginInfo["username"].ToString() &&
+                    data.GetValue(1).ToString() == LoginInfo["password"].ToString())
+                    res = true;
+            }
+            data.Close();
+            conn.Close();
+            return res;
         }
     }
 }
