@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/communication/communication.service';
+import { each } from 'jquery';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -18,6 +19,7 @@ export class ProfileComponent implements OnInit{
     currentPassword = localStorage.getItem("currentPassword");
     data: [][];
     finalData;
+    usersDB;
 
     constructor(private http:HttpClient, private modal:NgbModal, private CS:CommunicationService, private router: Router){}
 
@@ -90,12 +92,13 @@ export class ProfileComponent implements OnInit{
         const wsname : string = wb.SheetNames[0];
   
         const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-  
-        //console.log(ws);
-  
+    
         this.data = (XLSX.utils.sheet_to_json(ws, { header: 0 }));
   
-        console.log(this.data);
+        //console.log(this.data);
+        this.finalData = JSON.stringify(this.data);
+        //console.log(this.finalData)
+        this.removeInactives();
 
   
       };
@@ -104,11 +107,23 @@ export class ProfileComponent implements OnInit{
 
     }
 
+    removeInactives(){
+      var local = JSON.parse(this.finalData);
+      var data = []
+    
+      for(var i = 0; i < local.length; i++) {
+        if(local[i].status == "active"){
+          data.push(local[i]);
+        }
+      }
+      console.log(data);
+      this.usersDB = data; 
+    }
+
     uploadData(){
-      this.CS.uploadUsersData(this.data).subscribe(res => {
+      this.CS.uploadUsersData(this.usersDB).subscribe(res => {
         console.log(res);
-        alert("Actualización de usuarios exitosa.")
-      }) 
+      });
     }
 
 
