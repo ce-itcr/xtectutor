@@ -19,6 +19,11 @@ export class ProfesorProfileComponent implements OnInit{
 
     ngOnInit(){
         this.getProfessorData();
+
+        if(globalThis.flag == 1){
+            globalThis.flag = 0;
+            this.router.navigateByUrl("/search");
+          }
     }
 
     openModal(content){ this.modal.open(content,{size:'ms', centered:true});}

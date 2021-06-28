@@ -11,7 +11,7 @@ export interface ProfessorEntriesTableItem {
   career: string;
   title: string;
   description: string;
-  author: string;
+  //author: string;
   creationDate: string;
   creationHour: string;
   lastUpdate: string;
@@ -24,9 +24,9 @@ export interface ProfessorEntriesTableItem {
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: ProfessorEntriesTableItem[] = [
   {subject: 'Ley de Tensiones de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Tensiones de Kirchhoff', description: 'Breve introducción a la Ley de Tensiones de Kirchhoff',
-  author: 'Agustin Venegas', creationDate: '10/06/2021', creationHour: '12:00:00', lastUpdate: '17/06/2021', updateHour: '13:00:00', views: 13, value: 4.5, comments: 3},
+  creationDate: '10/06/2021', creationHour: '12:00:00', lastUpdate: '17/06/2021', updateHour: '13:00:00', views: 13, value: 4.5, comments: 3},
   {subject: 'Ley de Corrientes de Kirchhoff', course: 'Circuitos en CC', career: 'Ing. Electrónica', title: 'Ley de Corrientes de Kirchhoff', description: 'Breve introducción a la Ley de Corrientes de Kirchhoff',
-  author: 'Ivan Solis', creationDate: '6/06/2021', creationHour: '14:00:00', lastUpdate: '15/06/2021', updateHour: '8:00:00', views: 20, value: 4, comments: 7},
+  creationDate: '6/06/2021', creationHour: '14:00:00', lastUpdate: '15/06/2021', updateHour: '8:00:00', views: 20, value: 4, comments: 7},
 ];
 
 /**

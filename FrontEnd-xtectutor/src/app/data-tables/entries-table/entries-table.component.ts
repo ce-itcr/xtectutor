@@ -19,7 +19,7 @@ export class EntriesTableComponent implements AfterViewInit, OnInit {
   dataSource: EntriesTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['category', 'title', 'author', 'creationDate', 'lastUpdate', 'stats', 'read'];
+  displayedColumns = ['category', 'title', 'creationDate', 'lastUpdate', 'stats', 'read'];
 
   constructor(private modal:NgbModal, private CS: CommunicationService){}
 

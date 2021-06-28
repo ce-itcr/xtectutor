@@ -22,6 +22,11 @@ export class UserComponent implements OnInit{
       this.CS.getStudentEntries(this.currentUsername, false);
       this.getStudentsData();
 
+      if(globalThis.flag == 1){
+        globalThis.flag = 0;
+        this.router.navigateByUrl("/home");
+      }
+
     }
 
     openModal(content){ this.modal.open(content,{size:'ms', centered:true});}

@@ -13,14 +13,14 @@
     </ng-container>
 
     <!-- Visibility Column -->
-    <ng-container matColumnDef="author">
+    <!--<ng-container matColumnDef="author">
       <th mat-header-cell *matHeaderCellDef><p class="text-primary"><b>AUTOR</b></p></th>
       <td mat-cell *matCellDef="let row">  {{row.author}} </td>
-    </ng-container>
+    </ng-container>-->
 
     <!-- Creation Date Column -->
     <ng-container matColumnDef="creationDate">
-      <th mat-header-cell *matHeaderCellDef><p class="text-primary"><b>FECHA DE CREACIÓN</b></p></th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p class="text-primary"><b>FECHA DE CREACIÓN</b></p></th>
       <td mat-cell *matCellDef="let row"> {{row.creationDate}} <br> {{row.creationHour}} </td>
     </ng-container>
 
