@@ -124,6 +124,9 @@ export class NavbarComponent implements OnInit{
       } else if(localStorage.getItem("userType") == "admin"){
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
         this.router.navigate(['profile']));
+      } else if(localStorage.getItem("userType") == "professor"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['professor-profile']));
       }
     }
 
@@ -134,6 +137,9 @@ export class NavbarComponent implements OnInit{
       } else if(localStorage.getItem("userType") == "admin"){
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
         this.router.navigate(['categories']));
+      } else if(localStorage.getItem("userType") == "professor"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['search']));
       }
     }
 
@@ -142,6 +148,9 @@ export class NavbarComponent implements OnInit{
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
         this.router.navigate(['info']));
       } else if(localStorage.getItem("userType") == "admin"){
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['info']));
+      } else if(localStorage.getItem("userType") == "professor"){
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
         this.router.navigate(['info']));
       }

@@ -15,12 +15,14 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { ProfessorLayoutComponent } from "./layouts/professor-layout/professor-layout.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentLayoutComponent,
     AdminLayoutComponent,
+    ProfessorLayoutComponent
   ],
   imports: [
     BrowserAnimationsModule,

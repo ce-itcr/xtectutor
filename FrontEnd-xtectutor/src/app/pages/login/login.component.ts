@@ -41,9 +41,12 @@ export class LoginComponent{
         if(type == "admin"){
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['categories']));
-        } else if(type = "student"){
+        } else if(type == "student"){
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['home']));
+        } else if(type == "professor"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['search']));
         }
       } else{
         alert("Usuario o contraseña incorrecta")
