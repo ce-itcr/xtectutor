@@ -18,9 +18,9 @@ namespace xtectutor_backend.Controllers
     public class UserController : ApiController
     {
         //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER05;Initial Catalog=xtectutor;Integrated Security=True";
-        static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=MELI\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
-        //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
         Models.UserModel userModel = new Models.UserModel();
@@ -155,9 +155,10 @@ namespace xtectutor_backend.Controllers
                 new JProperty("updateHour", data.GetValue(3).ToString()),
                 new JProperty("title", data.GetValue(4).ToString()),
                 new JProperty("description", data.GetValue(5).ToString()),
-                new JProperty("career", data.GetValue(6).ToString()),
-                new JProperty("course", data.GetValue(7).ToString()),
-                new JProperty("subject", data.GetValue(8).ToString()),
+                new JProperty("entry", data.GetValue(6).ToString()),
+                new JProperty("career", data.GetValue(7).ToString()),
+                new JProperty("course", data.GetValue(8).ToString()),
+                new JProperty("subject", data.GetValue(9).ToString()),
                 new JProperty("comments", comments),
                 new JProperty("media", media),
                 new JProperty("coauthor", coauthor)
@@ -236,6 +237,7 @@ namespace xtectutor_backend.Controllers
         {
 
             string EntryID = EntryInfo["username"] + "-" + EntryInfo["creationDate"] + "-" + EntryInfo["creationHour"];
+            Debug.Print(EntryID.ToString());
             try
             {
                 conn.Open();
@@ -305,6 +307,7 @@ namespace xtectutor_backend.Controllers
         {
 
             string EntryID = EntryInfo["username"] + "-" + EntryInfo["creationDate"] + "-" + EntryInfo["creationHour"];
+            Debug.Print(EntryID);
             try
             {
                 conn.Open();
