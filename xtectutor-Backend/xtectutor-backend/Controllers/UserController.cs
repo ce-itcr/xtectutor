@@ -369,6 +369,11 @@ namespace xtectutor_backend.Controllers
                     int pos2 = data.GetValue(3).ToString().IndexOf("/") + 1;
                     pos2 += data.GetValue(3).ToString().Substring(pos2).IndexOf("/") + 5;
 
+                    if (AmountOfComments[data.GetValue(12).ToString()] == null)
+                    {
+                        AmountOfComments[data.GetValue(12).ToString()] = "0";
+                    }
+
                     JObject StudentEntry = new JObject(
                     new JProperty("creationDate", data.GetValue(1).ToString().Substring(0, pos1)),
                     new JProperty("creationHour", data.GetValue(2).ToString()),

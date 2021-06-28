@@ -14,8 +14,7 @@ namespace xtectutor_backend.Models
 
             conn.Open();
             SqlCommand selectRequest = conn.CreateCommand();
-            selectRequest.CommandText = "EXEC sp_GetNumberOfCommentsByEntry @Username";
-            selectRequest.Parameters.Add("@Username", SqlDbType.VarChar, 10).Value = StudentInfo["username"];
+            selectRequest.CommandText = "EXEC sp_GetNumberOfCommentsByEntry";
             selectRequest.ExecuteNonQuery();
 
             SqlDataReader data = selectRequest.ExecuteReader();
