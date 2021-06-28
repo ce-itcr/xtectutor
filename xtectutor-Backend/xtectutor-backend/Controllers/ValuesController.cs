@@ -15,10 +15,10 @@ namespace WebApplication1.Controllers
     [EnableCors(origins: "http://localhost:4200/", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
-        static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER06;Initial Catalog=xtectutor;Integrated Security=True";
+        //static string stringconnection = @"Data Source=DESKTOP-RCFSH5R\MSSQLSERVER06;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=MELI\\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         //static string stringconnection = @"Data Source=DESKTOP-MT7NP0P;Initial Catalog=xtectutor;Integrated Security=True";
-        //static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
+        static string stringconnection = @"Data Source=DESKTOP-FOUQTL8\SQLEXPRESS;Initial Catalog=xtectutor;Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
         [HttpPost]
