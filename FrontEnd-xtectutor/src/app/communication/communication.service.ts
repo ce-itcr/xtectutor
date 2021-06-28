@@ -39,9 +39,11 @@ export class CommunicationService {
   }
 
   updateStudentPassword(username, password){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/userdb/username/"+ username;
-    let body = {"password":password};
-    return this.http.patch(url, body);
+    return this.http.post<any[]>("api/user/update/password",
+    {
+      "username":username,
+      "password":password,
+    });
   }
 
   createEntry(username, creationDate, creationHour, title, description, entry, coauthors, career, course, subject, media){
@@ -80,9 +82,11 @@ export class CommunicationService {
   }
 
   updateAdminPassword(username, password){
-    let url = "https://sheet.best/api/sheets/b058fed3-ae2a-482a-a447-2fe23b2314a7/tabs/admindb/username/"+ username;
-    let body = {"password":password};
-    return this.http.patch(url, body);
+    return this.http.post<any[]>("api/admin/update/password",
+    {
+      "username":username,
+      "password":password,
+    });
   }
 
   getAdminsList(key){
