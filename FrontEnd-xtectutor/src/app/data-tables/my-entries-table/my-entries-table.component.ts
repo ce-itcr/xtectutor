@@ -86,6 +86,10 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     }
     date = month + "/" + day + "/" + year;
     this.creationDate = date;
+    
+    if(hour.slice(0,1) == "0"){
+      hour = hour.slice(1,9);
+    }
     var EntryID = this.currentUsername + "-" + date + "-" + hour;
 
     this.CS.getCoauthors(EntryID).subscribe( res => {
@@ -96,7 +100,7 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     });
   }
 
-  openModal(content){ 
+  openModal(content){
     this.currentTitle = this.entryElements["title"];
     this.currentDesc = this.entryElements["description"];
     this.currentEntry = this.entryElements["entry"];
@@ -165,7 +169,7 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     while(localCounter < this.coAuthorsCounter){
       var coAuthorValue = <HTMLInputElement>document.getElementById("coAuthor" +localCounter);
       this.coAuthorsList.push(coAuthorValue.value);
-      localCounter++;          
+      localCounter++;
     }
   }
 
@@ -174,7 +178,7 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     while(localCounter < this.mediaCounter){
       var mediaValue = <HTMLInputElement>document.getElementById("link" +localCounter);
       this.mediaList.push(mediaValue.value);
-      localCounter++;          
+      localCounter++;
     }
   }
 
@@ -183,13 +187,13 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     this.addMedia();
     this.setUpdateDate();
 
-    this.CS.editEntry(this.currentUsername, this.creationDate, this.creationHour, this.updateDate, this.updateHour, 
+    this.CS.editEntry(this.currentUsername, this.creationDate, this.creationHour, this.updateDate, this.updateHour,
       title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe( res => {
         this.CS.getStudentEntries(this.currentUsername, true);
       }, error => {
         alert("Error al editar la entrada");
       });
-  
+
   }
 
   setUpdateDate(){

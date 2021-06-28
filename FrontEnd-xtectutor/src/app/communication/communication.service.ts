@@ -287,11 +287,13 @@ export class CommunicationService {
     });
   }
 
-  sendComment(comment){
-    alert(comment)
-    return this.http.post<any[]>("api/user/send/feedback",
+  sendComment(comment, EntryID){
+    alert(comment);
+    alert(EntryID);
+    return this.http.post<any[]>("api/user/add/comment",
     {
-      "comment":comment
+      "comment":comment,
+      "EntryID": EntryID
     });
   }
 

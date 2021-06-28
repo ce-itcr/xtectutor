@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -21,6 +22,9 @@ export class EntriesTableComponent implements AfterViewInit, OnInit {
   displayedColumns = ['category', 'title', 'author', 'creationDate', 'lastUpdate', 'stats', 'read'];
 
   constructor(private modal:NgbModal, private CS: CommunicationService){}
+
+  cont = 0;
+  currentEntryID = '';
 
   entryElements = '';
 
@@ -73,10 +77,10 @@ export class EntriesTableComponent implements AfterViewInit, OnInit {
     this.entryDate = this.creationDate + " a las " + this.creationHour;
     
     this.comments = this.entryElements["comments"];
-    var cont = 0;
-    while(cont<this.comments.length){
-      this.comments[cont] = "Comentario " + (cont+1).toString() + ": " + this.comments[cont];
-      cont ++;
+    this.cont = 0;
+    while(this.cont<this.comments.length){
+      this.comments[this.cont] = "Comentario " + (this.cont+1).toString() + ": " + this.comments[this.cont];
+      this.cont ++;
     }
 
     this.modal.open(content,{size:'xl', centered:true});
@@ -118,15 +122,21 @@ export class EntriesTableComponent implements AfterViewInit, OnInit {
   sendEntryID(EntryID, content){
     this.CS.getCoauthors(EntryID).subscribe( res => {
       this.entryElements = res[0];
+      this.currentEntryID = EntryID;
       this.currentAuthor = EntryID.slice(0,10);
       this.openModal(content);
     }, error => {
-      alert("Error al obtener los datos")
+      alert("Error al obtener los datos");
     });
   }
 
   sendFeedback(comment){
-    this.CS.sendComment(comment);
+    this.CS.sendComment(comment, this.currentEntryID).subscribe( res => {
+      this.comments.push("Comentario " + (this.cont + 1).toString() + ": " + comment);
+      this.cont ++;
+    }, error => {
+      alert("No se pudo añadir el comentario")
+    });
   }
 
 }
