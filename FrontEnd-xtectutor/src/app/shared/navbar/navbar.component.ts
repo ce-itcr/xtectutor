@@ -43,14 +43,20 @@ export class NavbarComponent implements OnInit{
     }
 
     ngOnInit(){
-        this.setCreateButtonStatus();
-        var navbar : HTMLElement = this.element.nativeElement;
-        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
-        this.router.events.subscribe((event) => {
-          this.sidebarClose();
-       });
-       this.setCreationDate();
-       this.generateCareers();
+
+      if(globalThis.flag == 1){
+        globalThis.flag = 0;
+        location.reload();
+      }
+
+      this.setCreateButtonStatus();
+      var navbar : HTMLElement = this.element.nativeElement;
+      this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+      this.router.events.subscribe((event) => {
+        this.sidebarClose();
+      });
+      this.setCreationDate();
+      this.generateCareers();
 
     }
 
@@ -294,8 +300,7 @@ export class NavbarComponent implements OnInit{
         this.addCoauthors();
         this.addMedia();
         this.setCreationDate();
-        location.reload();   
-        this.CS.createEntry(this.currentUsername, this.creationDate, this.creationHour, title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe(res => {
+        this.CS.createEntry(this.currentUsername, this.creationDate, this.creationHour, title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe(res => { 
           this.CS.getStudentEntries(this.currentUsername, true);
         }, error => {
           alert(error);

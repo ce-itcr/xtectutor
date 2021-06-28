@@ -39,6 +39,7 @@ export class CommunicationService {
       }
       localStorage.setItem("myEntries", JSON.stringify(data));
       if(key){
+        location.reload();
         globalThis.flag = 1;
         this.router.navigateByUrl("/terms");
       }
@@ -56,17 +57,6 @@ export class CommunicationService {
   }
 
   createEntry(username, creationDate, creationHour, title, description, entry, coauthors, career, course, subject, media){
-    alert(username + "\n" +
-    creationDate + "\n" +
-    creationHour + "\n" +
-    title + "\n" +
-    description + "\n" +
-    entry + "\n" +
-    coauthors + "\n" +
-    career + "\n" +
-    course + "\n" +
-    subject + "\n" +
-    media);
     let body = {"username":username,"visibility":"pública","creationDate":creationDate,"creationHour":creationHour,"lastUpdate":creationDate,"updateHour":creationHour,
                 "views":"0","rating":"0.0", "title":title,"description":description, "entry":entry,"coauthors":coauthors,"career":career, "course":course,
                 "subject":subject,"media":media};
@@ -213,7 +203,6 @@ export class CommunicationService {
   }
 
   deleteSubject(subject){
-    alert(subject);
     return this.http.post<any[]>("api/user/delete/subject",
     {
       "subjectName":subject
@@ -221,7 +210,6 @@ export class CommunicationService {
   }
 
   deleteCourse(course){
-    alert(course);
     return this.http.post<any[]>("api/user/delete/course",
     {
       "courseCode":course
@@ -229,7 +217,6 @@ export class CommunicationService {
   }
 
   deleteCareer(career){
-    alert(career);
     return this.http.post<any[]>("api/user/delete/career",
     {
       "careerName":career
@@ -279,8 +266,6 @@ export class CommunicationService {
   }
 
   sendComment(comment, EntryID){
-    alert(comment);
-    alert(EntryID);
     return this.http.post<any[]>("api/user/add/comment",
     {
       "comment":comment,
