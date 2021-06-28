@@ -325,5 +325,66 @@ namespace xtectutor_backend.Controllers
                 return BadRequest("Error al actualizado");
             }
         }
+
+        [HttpPost]
+        [Route("api/user/search/entries")]
+        public JArray getStudentsEntries([FromBody] JObject categorySelected)
+        {
+            
+            JObject AmountOfComments = userModel.getCommentAmmout(conn, categorySelected);
+
+            Debug.Print(categorySelected["career"].ToString());
+            Debug.Print(categorySelected["course"].ToString());
+            Debug.Print(categorySelected["subject"].ToString());
+
+            conn.Open();
+            SqlCommand selectRequest = conn.CreateCommand();
+            selectRequest.CommandText = "EXEC sp_searchEntries @Career, @Course, @Subject";
+            selectRequest.Parameters.Add("@Career", SqlDbType.VarChar, 50).Value = categorySelected["career"];
+            selectRequest.Parameters.Add("@Course", SqlDbType.VarChar, 50).Value = categorySelected["course"];
+            selectRequest.Parameters.Add("@Subject", SqlDbType.VarChar, 50).Value = categorySelected["subject"];
+            selectRequest.ExecuteNonQuery();
+
+            SqlDataReader data = selectRequest.ExecuteReader();
+
+            JArray obj = new JArray();
+
+            while (data.Read())
+            {
+                Debug.Print(data.GetValue(11).ToString());
+                
+                if (data.GetValue(0).ToString() == "pública")
+                {
+                    
+                    int pos1 = data.GetValue(1).ToString().IndexOf("/") + 1;
+                    pos1 += data.GetValue(1).ToString().Substring(pos1).IndexOf("/") + 5;
+
+                    int pos2 = data.GetValue(3).ToString().IndexOf("/") + 1;
+                    pos2 += data.GetValue(3).ToString().Substring(pos2).IndexOf("/") + 5;
+
+                    JObject StudentEntry = new JObject(
+                    new JProperty("creationDate", data.GetValue(1).ToString().Substring(0, pos1)),
+                    new JProperty("creationHour", data.GetValue(2).ToString()),
+                    new JProperty("lastUpdate", data.GetValue(3).ToString().Substring(0, pos2)),
+                    new JProperty("updateHour", data.GetValue(4).ToString()),
+                    new JProperty("views", data.GetValue(5).ToString()),
+                    new JProperty("rating", data.GetValue(6).ToString()),
+                    new JProperty("title", data.GetValue(7).ToString()),
+                    new JProperty("description", data.GetValue(8).ToString()),
+                    new JProperty("career", data.GetValue(9).ToString()),
+                    new JProperty("course", data.GetValue(10).ToString()),
+                    new JProperty("subject", data.GetValue(11).ToString()),
+                    new JProperty("comments", AmountOfComments[data.GetValue(12).ToString()]),
+                    new JProperty("EntryID", data.GetValue(12).ToString())
+                    );
+                    obj.Add(StudentEntry);
+                }
+
+                
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
     }
 }
