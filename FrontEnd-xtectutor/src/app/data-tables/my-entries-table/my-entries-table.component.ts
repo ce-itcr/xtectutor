@@ -87,10 +87,20 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     date = month + "/" + day + "/" + year;
     this.creationDate = date;
     
-    if(hour.slice(0,1) == "0"){
-      hour = hour.slice(1,9);
+    var cont = 0;
+    var newHour = '';
+    while(cont < hour.length){
+      if(cont == 0 || cont == 3 || cont == 6){
+        if(hour[cont] == '0'){
+        }else{
+          newHour += hour[cont];
+        }
+      }else{
+        newHour += hour[cont];
+      }
+      cont++;
     }
-    var EntryID = this.currentUsername + "-" + date + "-" + hour;
+    var EntryID = this.currentUsername + "-" + date + "-" + newHour;
 
     this.CS.getCoauthors(EntryID).subscribe( res => {
       this.entryElements = res[0];
@@ -187,11 +197,21 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     this.addMedia();
     this.setUpdateDate();
 
-    if(this.creationHour.slice(0,1) == '0'){
-      this.creationHour = this.creationHour.slice(1,9);
+    var cont = 0;
+    var newHour = '';
+    while(cont < this.creationHour.length){
+      if(cont == 0 || cont == 3 || cont == 6){
+        if(this.creationHour[cont] == '0'){
+        }else{
+          newHour += this.creationHour[cont];
+        }
+      }else{
+        newHour += this.creationHour[cont];
+      }
+      cont ++;
     }
 
-    this.CS.editEntry(this.currentUsername, this.creationDate, this.creationHour, this.updateDate, this.updateHour,
+    this.CS.editEntry(this.currentUsername, this.creationDate, newHour, this.updateDate, this.updateHour,
       title, description, entry, this.coAuthorsList, career, course, subject, this.mediaList).subscribe( res => {
         this.CS.getStudentEntries(this.currentUsername, true);
       }, error => {
@@ -239,7 +259,22 @@ export class MyEntriesTableComponent implements AfterViewInit, OnInit {
     }else{
       visibility = "pública";
     }
-    this.CS.visibilityChange(this.currentUsername,date,creationHour, visibility).subscribe(res => {
+
+    var cont = 0;
+    var newHour = '';
+    while(cont < creationHour.length){
+      if(cont == 0 || cont == 3 || cont == 6){
+        if(creationHour[cont] == '0'){
+        }else{
+          newHour += creationHour[cont];
+        }
+      }else{
+        newHour += creationHour[cont];
+      }
+      cont ++;
+    }
+
+    this.CS.visibilityChange(this.currentUsername,date,newHour, visibility).subscribe(res => {
       this.CS.getStudentEntries(this.currentUsername, true);
     }, error => {
       alert("Error al actualizar visibilidad")
