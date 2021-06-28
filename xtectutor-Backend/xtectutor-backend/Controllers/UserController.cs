@@ -62,7 +62,7 @@ namespace xtectutor_backend.Controllers
         {
 
             JObject AmountOfComments = userModel.getCommentAmmout(conn, StudentInfo);
-
+            Debug.Print(AmountOfComments.ToString());
             conn.Open();
             SqlCommand selectRequest = conn.CreateCommand();
             selectRequest.CommandText = "EXEC sp_GetStudentEntries @Username";
@@ -95,6 +95,12 @@ namespace xtectutor_backend.Controllers
 
                 int pos2 = data.GetValue(3).ToString().IndexOf("/") + 1;
                 pos2 += data.GetValue(3).ToString().Substring(pos2).IndexOf("/") + 5;
+
+
+                if (AmountOfComments[data.GetValue(12).ToString()] == null)
+                {
+                    AmountOfComments[data.GetValue(12).ToString()] = "0";
+                }
 
                 JObject StudentEntry = new JObject(
                 new JProperty("visibility", data.GetValue(0).ToString()),

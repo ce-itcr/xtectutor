@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Data;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace xtectutor_backend.Models
 {
